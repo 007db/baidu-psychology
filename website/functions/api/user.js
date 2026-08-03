@@ -1,0 +1,1 @@
+export async function onRequestPost(context){const d=await context.request.json();return Response.json({success:true,message:'注册接口正常',email:d.email})}
