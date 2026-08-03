@@ -1,4 +1,8 @@
 body{
-font-family:"Microsoft YaHei",Arial;
+font-family:Arial;
 padding:40px;
+color:#245;
+}
+a{
+margin:10px;
 }

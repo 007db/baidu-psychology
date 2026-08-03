@@ -3,7 +3,7 @@ const data=await context.request.json();
 
 return Response.json({
 success:true,
-message:"预约接口正常",
-data
+message:"注册接口正常",
+email:data.email
 });
 }

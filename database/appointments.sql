@@ -1,0 +1,9 @@
+CREATE TABLE appointments(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+name TEXT NOT NULL,
+phone TEXT NOT NULL,
+service TEXT,
+appointment_time TEXT,
+message TEXT,
+created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
