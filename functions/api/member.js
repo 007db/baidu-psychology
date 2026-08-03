@@ -1,1 +1,3 @@
-export async function onRequest(){return Response.json({member:true});}
+export async function onRequest(){
+return Response.json({level:"普通会员",points:0});
+}

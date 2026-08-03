@@ -1,1 +1,3 @@
-export async function onRequest(){return new Response('摆渡心理 Sprint 3 API 正常运行');}
+export async function onRequest(){
+return new Response("摆渡心理 Sprint 3.1 API正常");
+}

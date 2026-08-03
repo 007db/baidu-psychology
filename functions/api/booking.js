@@ -1,1 +1,3 @@
-export async function onRequest(){return Response.json({booking:true});}
+export async function onRequestPost(){
+return Response.json({success:true,status:"pending"});
+}
