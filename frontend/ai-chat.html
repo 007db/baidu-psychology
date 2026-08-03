@@ -1,14 +1,14 @@
 <h2>DeepSeek AI心理助手</h2>
-<textarea id="msg"></textarea>
+<textarea id="message"></textarea>
 <button onclick="send()">发送</button>
-<div id="result"></div>
+<div id="answer"></div>
 <script>
 async function send(){
 let r=await fetch('/api/chat',{
 method:'POST',
 headers:{'Content-Type':'application/json'},
-body:JSON.stringify({message:msg.value})
+body:JSON.stringify({message:message.value})
 });
-result.innerHTML=await r.text();
+answer.innerHTML=await r.text();
 }
 </script>

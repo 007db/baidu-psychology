@@ -1,5 +1,5 @@
 export async function onRequestPost(){
 return Response.json({
-order_status:"pending"
+report:"测评报告生成中"
 });
 }

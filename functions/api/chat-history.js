@@ -1,3 +1,3 @@
 export async function onRequest(){
-return Response.json({messages:[]});
+return Response.json({history:[]});
 }
