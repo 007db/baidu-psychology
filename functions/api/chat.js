@@ -1,5 +1,5 @@
 export async function onRequestPost(context){
-const body=await context.request.json();
+const {message}=await context.request.json();
 const key=context.env.DEEPSEEK_API_KEY;
 const res=await fetch('https://api.deepseek.com/chat/completions',{
 method:'POST',
@@ -10,8 +10,8 @@ headers:{
 body:JSON.stringify({
 model:'deepseek-chat',
 messages:[
-{role:'system',content:'你是摆渡心理企业版AI助手，提供心理支持。'},
-{role:'user',content:body.message}
+{role:'system',content:'你是摆渡心理企业旗舰版AI助手，提供心理支持。'},
+{role:'user',content:message}
 ]
 })
 });

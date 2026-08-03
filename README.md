@@ -1,20 +1,21 @@
-# 摆渡心理 V4.0 Sprint 5.0 企业版
+# 摆渡心理 V4.0 Sprint 5.5 企业旗舰版
 
-Enterprise SaaS Edition
+Enterprise Flagship SaaS
 
-技术:
+技术架构:
 Cloudflare Pages
 Cloudflare Functions
 D1 Database
 DeepSeek AI
 
 新增:
-- 多租户企业机构
-- 企业管理员后台
-- 咨询师工作台
-- AI心理档案
-- 企业数据报告
-- 权限角色体系
+- RBAC权限系统基础
+- 企业微信/手机号登录接口预留
+- 咨询师排班系统
+- AI心理档案增强
+- 企业订阅计费基础
+- 审计日志
+- SaaS企业控制台
 
 环境变量:
 DEEPSEEK_API_KEY
