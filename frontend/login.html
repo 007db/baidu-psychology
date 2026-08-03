@@ -1,12 +1,1 @@
-<!doctype html><html><body>
-<h2>会员登录</h2>
-<input id="phone" placeholder="手机号">
-<input id="password" placeholder="密码">
-<button onclick="go()">登录</button>
-<script>
-async function go(){
-let r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:phone.value,password:password.value})});
-alert(await r.text());
-}
-</script>
-</body></html>
+<h2>登录</h2>

@@ -1,4 +1,3 @@
-export async function onRequestPost(context){
-const data=await context.request.json();
-return Response.json({success:true,token:"demo-token",phone:data.phone});
+export async function onRequestPost(){
+return Response.json({success:true});
 }
