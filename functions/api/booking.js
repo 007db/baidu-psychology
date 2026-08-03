@@ -1,5 +1,1 @@
-export async function onRequest(context){
-return new Response(JSON.stringify({success:true,message:"预约接口运行"}),{
-headers:{"content-type":"application/json"}
-});
-}
+export async function onRequest(){return Response.json({booking:true});}
