@@ -1,21 +1,9 @@
-# 摆渡心理 V4.0 Sprint 5.5 企业旗舰版
+# 摆渡心理 V4.0 Sprint 5.6 管理后台完整版
 
-Enterprise Flagship SaaS
+新增管理员登录、后台首页、用户管理、企业管理、咨询师管理、AI统计、订单管理、RBAC基础。
 
-技术架构:
-Cloudflare Pages
-Cloudflare Functions
-D1 Database
-DeepSeek AI
+演示账号：admin
+演示密码：admin123
 
-新增:
-- RBAC权限系统基础
-- 企业微信/手机号登录接口预留
-- 咨询师排班系统
-- AI心理档案增强
-- 企业订阅计费基础
-- 审计日志
-- SaaS企业控制台
-
-环境变量:
-DEEPSEEK_API_KEY
+Cloudflare Pages: frontend
+环境变量: DEEPSEEK_API_KEY

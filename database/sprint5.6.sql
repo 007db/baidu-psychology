@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS admins(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+username TEXT,
+password TEXT,
+role TEXT
+);

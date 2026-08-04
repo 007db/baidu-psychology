@@ -1,0 +1,1 @@
+export async function onRequest(){return Response.json({ai_usage:0});}

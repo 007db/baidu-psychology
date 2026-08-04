@@ -1,10 +1,1 @@
-export async function onRequest(){
-return Response.json({
-roles:[
-'super_admin',
-'company_admin',
-'doctor',
-'member'
-]
-});
-}
+export async function onRequest(){return Response.json({roles:['super_admin','company_admin','doctor','member']});}
