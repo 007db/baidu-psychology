@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html><body>
 <h1>DeepSeek AI心理助手</h1>
-<textarea id="msg" placeholder="请输入你的心理困扰"></textarea>
-<button onclick="send()">开始咨询</button>
+<textarea id="message" placeholder="请输入你的问题"></textarea>
+<button onclick="ask()">发送</button>
 <div id="result"></div>
 <script>
-async function send(){
-let r=await fetch('/api/ai',{method:'POST',body:JSON.stringify({message:msg.value})});
+async function ask(){
+let r=await fetch('/api/ai',{
+method:'POST',
+headers:{'content-type':'application/json'},
+body:JSON.stringify({message:message.value})
+});
 result.innerHTML=await r.text();
 }
 </script>

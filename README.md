@@ -1,13 +1,14 @@
-# 摆渡心理 Sprint 6.2 Enterprise
+# 摆渡心理 Sprint 6.3 真实运营版
 
-升级内容：
+升级：
 - DeepSeek AI接口结构
-- 在线预约系统升级
+- 用户登录体系
 - 会员中心
-- 企业EAP页面
-- 管理后台结构
-- D1数据库表
+- 在线预约数据结构
+- AI记录存储
+- 管理后台接口
 
-部署：
+技术：
 Cloudflare Pages + Functions + D1
-GitHub覆盖上传即可。
+
+上传GitHub后重新部署即可。

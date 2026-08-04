@@ -1,6 +1,6 @@
 export async function onRequest(){
 return Response.json({
-member:"enterprise",
+memberLevel:"enterprise",
 status:"active"
 });
 }

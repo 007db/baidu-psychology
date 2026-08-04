@@ -1,3 +1,6 @@
 export async function onRequest(){
-return Response.json({success:true});
+return Response.json({
+dashboard:"online",
+services:["booking","ai","member"]
+});
 }

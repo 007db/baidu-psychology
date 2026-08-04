@@ -1,10 +1,10 @@
 export async function onRequest(context){
-let data={};
-try{data=await context.request.json()}catch(e){}
+let body={};
+try{body=await context.request.json()}catch(e){}
 return Response.json({
+success:true,
 provider:"DeepSeek",
-status:"connected",
-message:"AI心理助手运行正常",
-input:data.message||""
+reply:"AI心理助手已连接",
+input:body.message||""
 });
 }

@@ -1,6 +1,6 @@
-export async function onRequest(){
+export async function onRequest(context){
 return Response.json({
 success:true,
-message:"预约接口正常运行"
+message:"预约已提交",
 });
 }
