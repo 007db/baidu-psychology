@@ -1,3 +1,3 @@
 export async function onRequest(){
-return Response.json({level:'member'});
+return Response.json({level:"普通会员"});
 }
