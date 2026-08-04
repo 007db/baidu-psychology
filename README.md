@@ -1,9 +1,19 @@
-# 摆渡心理 V4.0 Sprint 5.6 管理后台完整版
+# 摆渡心理 V4.0 Sprint 5.7 企业后台增强版
 
-新增管理员登录、后台首页、用户管理、企业管理、咨询师管理、AI统计、订单管理、RBAC基础。
+基于 Sprint 5.6 管理后台升级。
 
-演示账号：admin
-演示密码：admin123
+新增：
+- JWT登录认证基础
+- 密码加密结构预留
+- 管理员退出登录
+- 后台数据统计图表接口
+- 用户搜索分页接口
+- 企业员工管理
+- 操作审计增强
+- 子管理员管理
 
-Cloudflare Pages: frontend
-环境变量: DEEPSEEK_API_KEY
+Cloudflare Pages:
+Build output directory: frontend
+
+环境变量:
+DEEPSEEK_API_KEY
