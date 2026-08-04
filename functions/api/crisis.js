@@ -1,8 +1,6 @@
 export async function onRequest(){
 return Response.json({
-users:0,
-appointments:0,
-ai_sessions:0,
-crisis_calls:0
+hotline:"400 007 1995",
+service:"危机干预支持"
 });
 }

@@ -1,19 +1,21 @@
-# 摆渡心理 Sprint 6.8
-
-AI智能服务运营版（不使用医疗命名）
+# 摆渡心理 Sprint 6.9 AI商业旗舰版
 
 升级：
-- 用户认证结构
-- D1数据库
-- DeepSeek接口预留
+- AI心理助手
+- DeepSeek接口结构
 - 在线预约
 - 会员中心
 - 企业服务
-- 管理后台数据
+- 运营后台
+- 危机干预热线入口
 
-Cloudflare Pages:
+危机干预热线：
+400 007 1995
+
+部署：
+Cloudflare Pages
 Root directory /
 Build output frontend
 
-环境变量:
-DEEPSEEK_API_KEY=你的Key
+环境变量：
+DEEPSEEK_API_KEY
