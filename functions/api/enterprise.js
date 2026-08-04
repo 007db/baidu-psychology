@@ -1,5 +1,3 @@
 export async function onRequest(){
-return Response.json({
-service:"EAP-enterprise"
-});
+return Response.json({enterprise:"multi-tenant-ready"});
 }

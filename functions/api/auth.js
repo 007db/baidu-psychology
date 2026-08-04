@@ -1,3 +1,3 @@
 export async function onRequest(){
-return Response.json({success:true,token:"jwt-ready"});
+return Response.json({auth:"JWT-ready"});
 }
