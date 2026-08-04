@@ -1,3 +1,6 @@
 export async function onRequest(){
-return Response.json({level:"普通会员"});
+return Response.json({
+member:"enterprise",
+status:"active"
+});
 }

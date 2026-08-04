@@ -1,53 +1,13 @@
 <!DOCTYPE html>
-
-<html lang="zh-CN">
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>AI心理助手</title>
-
-<link rel="stylesheet" href="style.css">
-
-</head>
-
-
-<body>
-
-
-<div class="page">
-
-
-<div class="card">
-
-
-<h1>
-AI心理助手
-</h1>
-
-
-<p>
-你好，我是摆渡心理AI助手。
-</p>
-
-
-<textarea 
-placeholder="请输入你的想法或困扰">
-</textarea>
-
-
-<button>
-开始交流
-</button>
-
-
-</div>
-
-
-</div>
-
-
-</body>
-
-</html>
+<html><body>
+<h1>DeepSeek AI心理助手</h1>
+<textarea id="msg" placeholder="请输入你的心理困扰"></textarea>
+<button onclick="send()">开始咨询</button>
+<div id="result"></div>
+<script>
+async function send(){
+let r=await fetch('/api/ai',{method:'POST',body:JSON.stringify({message:msg.value})});
+result.innerHTML=await r.text();
+}
+</script>
+</body></html>

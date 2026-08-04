@@ -1,10 +1,13 @@
-# 摆渡心理 Sprint 6.1 Enterprise
+# 摆渡心理 Sprint 6.2 Enterprise
 
-包含上传整理页面：
-- 首页
-- AI心理助手
-- 在线预约
-- 后台登录
-- 后台管理
+升级内容：
+- DeepSeek AI接口结构
+- 在线预约系统升级
+- 会员中心
+- 企业EAP页面
+- 管理后台结构
+- D1数据库表
 
-适配 Cloudflare Pages + Functions + D1。
+部署：
+Cloudflare Pages + Functions + D1
+GitHub覆盖上传即可。
