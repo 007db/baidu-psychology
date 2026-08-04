@@ -1,7 +1,7 @@
 export async function onRequest(context){
 return Response.json({
-provider:"DeepSeek",
-status:"ready",
-features:["emotion-analysis","stress-report","assistant"]
+model:["DeepSeek","GPT"],
+service:"AI心理助手",
+status:"ready"
 });
 }

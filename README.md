@@ -1,15 +1,15 @@
-# 摆渡心理 Sprint 6.5 AI商业旗舰版
+# 摆渡心理 Sprint 6.6 AI医疗级增强版
 
-核心升级：
-- DeepSeek AI心理助手
-- AI心理报告生成
-- 智能预约
-- 在线支付结构
-- 咨询师生态
-- 企业SaaS中心
-- AI运营数据大屏
+升级：
+- 多模型AI架构
+- RAG心理知识库
+- AI心理档案
+- 风险预警
+- 企业心理健康报告
+- 咨询师工作台
+- AI数据大屏
 
-架构：
+技术：
 Cloudflare Pages
 Cloudflare Functions
 Cloudflare D1

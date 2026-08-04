@@ -1,8 +1,5 @@
 export async function onRequest(){
 return Response.json({
-users:0,
-riskAlerts:0,
-companies:0,
-aiSessions:0
+knowledge:"心理知识库检索接口"
 });
 }
