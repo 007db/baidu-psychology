@@ -1,3 +1,3 @@
-export async function onRequest(context){
-return Response.json({provider:"DeepSeek",stream:true,status:"ready"});
+export async function onRequest(){
+return Response.json({provider:"DeepSeek",mode:"group-service",stream:true});
 }
