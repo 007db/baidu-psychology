@@ -1,6 +1,7 @@
 export async function onRequest(){
 return Response.json({
-dashboard:"online",
-services:["booking","ai","member"]
+users:0,
+appointments:0,
+ai_sessions:0
 });
 }

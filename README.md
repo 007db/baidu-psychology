@@ -1,12 +1,16 @@
-# 摆渡心理 Sprint 6.6 修正版
+# 摆渡心理 Sprint 6.7
 
-修复内容：
-1. 修复首页无预约入口
-2. 修复AI页面无法进入
-3. 修复管理员入口跳转
-4. 加入Logo资源
-5. 修正静态路径引用
-6. 保留Cloudflare Pages Functions结构
+功能升级：
+- 用户真实登录结构
+- D1数据库结构
+- DeepSeek API接口预留
+- 预约系统
+- 会员中心
+- 管理后台数据接口
 
-部署：
-GitHub覆盖上传即可。
+Cloudflare Pages:
+Root directory /
+Build output frontend
+
+环境变量:
+DEEPSEEK_API_KEY=你的DeepSeek密钥

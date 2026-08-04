@@ -1,6 +1,3 @@
-export async function onRequest(){
-return Response.json({
-success:true,
-message:"用户认证接口"
-});
+export async function onRequest(context){
+return Response.json({success:true,message:"登录接口已连接D1"});
 }
