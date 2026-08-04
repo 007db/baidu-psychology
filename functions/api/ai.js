@@ -1,7 +1,3 @@
-export async function onRequest(context){
-return Response.json({
-model:["DeepSeek","GPT"],
-service:"AI心理助手",
-status:"ready"
-});
+export async function onRequest(){
+return Response.json({success:true,message:"AI接口正常"});
 }

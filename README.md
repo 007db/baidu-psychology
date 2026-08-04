@@ -1,17 +1,12 @@
-# 摆渡心理 Sprint 6.6 AI医疗级增强版
+# 摆渡心理 Sprint 6.6 修正版
 
-升级：
-- 多模型AI架构
-- RAG心理知识库
-- AI心理档案
-- 风险预警
-- 企业心理健康报告
-- 咨询师工作台
-- AI数据大屏
+修复内容：
+1. 修复首页无预约入口
+2. 修复AI页面无法进入
+3. 修复管理员入口跳转
+4. 加入Logo资源
+5. 修正静态路径引用
+6. 保留Cloudflare Pages Functions结构
 
-技术：
-Cloudflare Pages
-Cloudflare Functions
-Cloudflare D1
-
-GitHub覆盖部署即可。
+部署：
+GitHub覆盖上传即可。
