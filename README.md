@@ -1,18 +1,18 @@
-# 摆渡心理 Sprint 7.0 AI心理SaaS商业运营平台版
+# 摆渡心理 Sprint 7.1 AI心理SaaS真实商业版
 
 升级：
-- AI心理助手
-- DeepSeek接口结构
-- 用户体系
-- 会员中心
-- 咨询师工作台
-- 企业中心
-- 运营后台
-- 危机干预热线 400 007 1995
+- JWT登录结构
+- DeepSeek流式接口结构
+- D1业务数据库
+- 预约系统
+- 会员体系
+- 咨询师审核
+- 企业客户管理
+- 支付接口预留
+- 数据运营中心
 
-Cloudflare Pages:
-Root directory /
-Build output frontend
+危机干预热线：
+400 007 1995
 
-环境变量:
-DEEPSEEK_API_KEY
+部署：
+Cloudflare Pages + Functions + D1

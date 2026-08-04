@@ -1,5 +1,3 @@
 export async function onRequest(){
-return Response.json({
-service:"consultant-management"
-});
+return Response.json({consultant:"review-system"});
 }

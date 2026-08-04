@@ -1,3 +1,3 @@
 export async function onRequest(){
-return Response.json({success:true,message:"认证服务"});
+return Response.json({success:true,token:"jwt-ready"});
 }
