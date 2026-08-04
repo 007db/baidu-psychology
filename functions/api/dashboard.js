@@ -1,8 +1,9 @@
 export async function onRequest(){
 return Response.json({
 users:0,
-appointments:0,
+members:0,
+bookings:0,
 ai_sessions:0,
-crisis_calls:0
+companies:0
 });
 }

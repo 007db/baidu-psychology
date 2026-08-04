@@ -1,6 +1,3 @@
 export async function onRequest(){
-return Response.json({
-hotline:"400 007 1995",
-service:"危机干预支持"
-});
+return Response.json({hotline:"4000071995"});
 }
