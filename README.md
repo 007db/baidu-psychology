@@ -1,14 +1,16 @@
-# 摆渡心理 Sprint 6.3 真实运营版
+# 摆渡心理 Sprint 6.4 商业化版
 
-升级：
-- DeepSeek AI接口结构
-- 用户登录体系
-- 会员中心
-- 在线预约数据结构
-- AI记录存储
-- 管理后台接口
+新增：
+- 商业套餐
+- 咨询师体系
+- 企业EAP销售体系
+- 支付接口结构
+- 订单系统
+- 运营后台
 
-技术：
-Cloudflare Pages + Functions + D1
+架构：
+Cloudflare Pages
+Cloudflare Functions
+Cloudflare D1
 
-上传GitHub后重新部署即可。
+GitHub覆盖部署即可。

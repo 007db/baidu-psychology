@@ -1,5 +1,5 @@
 export async function onRequest(){
 return Response.json({
-payment:"ready"
+status:"payment-api-ready"
 });
 }
