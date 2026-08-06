@@ -1,4 +1,1 @@
-<h1>DeepSeek AI心理助手</h1>
-<textarea placeholder="请输入您的情绪和困扰"></textarea>
-<button>开始AI服务</button>
-<p>AI陪伴、情绪分析、心理知识服务。</p>
+<h1>DeepSeek AI心理助手</h1><textarea id="m"></textarea><button onclick="go()">发送</button><pre id="r"></pre><script>async function go(){let x=await fetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:m.value})});r.innerText=await x.text()}</script>
