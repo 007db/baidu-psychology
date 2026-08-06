@@ -1,15 +1,18 @@
-export async function onRequestPost(c){
-const d=await c.request.json();
-const r=await fetch('https://api.deepseek.com/chat/completions',{
-method:'POST',
+export async function onRequestPost(context){
+const body=await context.request.json();
+const key=context.env.DEEPSEEK_API_KEY;
+const res=await fetch("https://api.deepseek.com/chat/completions",{
+method:"POST",
 headers:{
-Authorization:'Bearer '+c.env.DEEPSEEK_API_KEY,
-'Content-Type':'application/json'
+"Authorization":"Bearer "+key,
+"Content-Type":"application/json"
 },
 body:JSON.stringify({
-model:'deepseek-chat',
-messages:[{role:'user',content:d.message}]
+model:"deepseek-chat",
+messages:[{role:"user",content:body.message}]
 })
 });
-return new Response(await r.text());
+return new Response(await res.text(),{
+headers:{"Content-Type":"application/json"}
+});
 }
