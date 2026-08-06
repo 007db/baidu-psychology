@@ -1,1 +1,12 @@
-<h1>管理后台</h1>
+<!doctype html>
+<html><body>
+<h1>运营管理后台</h1>
+<button onclick="load()">查看预约</button>
+<pre id="box"></pre>
+<script>
+async function load(){
+let r=await fetch('/api/admin/appointments');
+box.innerText=await r.text();
+}
+</script>
+</body></html>
