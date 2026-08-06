@@ -1,7 +1,9 @@
-export async function onRequest(){
-return Response.json({
-users:0,
-appointments:0,
-ai_sessions:0
+export async function onRequest({env}) {
+const result=await env.BAIDU_PSYCHOLOGY_DB.prepare(
+'SELECT * FROM appointments ORDER BY id DESC'
+).all();
+
+return new Response(JSON.stringify(result.results),{
+headers:{'Content-Type':'application/json'}
 });
 }

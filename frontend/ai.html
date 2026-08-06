@@ -1,1 +1,17 @@
+<!doctype html>
+<html><body>
 <h1>AI心理助手</h1>
+<textarea id="msg" placeholder="请输入您的问题"></textarea>
+<button onclick="send()">发送</button>
+<pre id="result"></pre>
+<script>
+async function send(){
+ const r=await fetch('/api/ai',{
+ method:'POST',
+ headers:{'Content-Type':'application/json'},
+ body:JSON.stringify({message:msg.value})
+ });
+ result.textContent=await r.text();
+}
+</script>
+</body></html>
