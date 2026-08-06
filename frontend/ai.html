@@ -1,17 +1,507 @@
 <!doctype html>
-<html><body>
-<h1>AI心理助手</h1>
-<textarea id="msg" placeholder="请输入您的问题"></textarea>
-<button onclick="send()">发送</button>
-<pre id="result"></pre>
-<script>
-async function send(){
- const r=await fetch('/api/ai',{
- method:'POST',
- headers:{'Content-Type':'application/json'},
- body:JSON.stringify({message:msg.value})
- });
- result.textContent=await r.text();
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>摆渡心理 AI助手</title>
+
+
+<style>
+
+body{
+
+margin:0;
+
+font-family:
+"Microsoft YaHei",
+Arial,
+sans-serif;
+
+background:#f3f9ff;
+
 }
+
+
+.container{
+
+max-width:700px;
+
+margin:30px auto;
+
+padding:20px;
+
+}
+
+
+.logo-title{
+
+text-align:center;
+
+color:#0077c8;
+
+font-size:28px;
+
+font-weight:bold;
+
+}
+
+
+.subtitle{
+
+text-align:center;
+
+color:#555;
+
+margin-bottom:20px;
+
+}
+
+
+
+.chat-box{
+
+background:white;
+
+border-radius:15px;
+
+padding:20px;
+
+min-height:350px;
+
+box-shadow:
+0 5px 20px rgba(0,0,0,.08);
+
+overflow:auto;
+
+}
+
+
+
+.user{
+
+text-align:right;
+
+margin:12px 0;
+
+}
+
+
+.user span{
+
+display:inline-block;
+
+background:#0077c8;
+
+color:white;
+
+padding:10px 15px;
+
+border-radius:15px;
+
+}
+
+
+
+.ai{
+
+text-align:left;
+
+margin:12px 0;
+
+}
+
+
+.ai span{
+
+display:inline-block;
+
+background:#e8f5ff;
+
+color:#333;
+
+padding:10px 15px;
+
+border-radius:15px;
+
+}
+
+
+
+.input-area{
+
+display:flex;
+
+margin-top:15px;
+
+gap:10px;
+
+}
+
+
+textarea{
+
+flex:1;
+
+height:70px;
+
+border-radius:10px;
+
+border:1px solid #ccc;
+
+padding:10px;
+
+font-size:15px;
+
+resize:none;
+
+}
+
+
+button{
+
+width:90px;
+
+background:#0077c8;
+
+color:white;
+
+border:none;
+
+border-radius:10px;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+background:#005fa3;
+
+}
+
+
+
+.hotline{
+
+margin-top:25px;
+
+text-align:center;
+
+font-size:16px;
+
+}
+
+
+.hotline a{
+
+color:#e53935;
+
+font-weight:bold;
+
+text-decoration:none;
+
+}
+
+
+.loading{
+
+color:#999;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="logo-title">
+
+摆渡心理 AI心理助手
+
+</div>
+
+
+<div class="subtitle">
+
+温暖陪伴 · 专业支持 · 安全交流
+
+</div>
+
+
+
+<div id="chat" class="chat-box">
+
+
+<div class="ai">
+
+<span>
+您好，我是摆渡心理AI助手。
+<br>
+您可以告诉我最近的情绪、压力或困扰。
+</span>
+
+</div>
+
+
+</div>
+
+
+
+<div class="input-area">
+
+
+<textarea
+id="msg"
+placeholder="请输入您的问题，例如：最近压力很大怎么办？">
+</textarea>
+
+
+<button onclick="send()">
+发送
+</button>
+
+
+</div>
+
+
+
+<div class="hotline">
+
+心理危机干预热线：
+
+<a href="tel:4000071995">
+400 007 1995
+</a>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+async function send(){
+
+
+const input =
+document.getElementById("msg");
+
+
+const text =
+input.value.trim();
+
+
+
+if(!text){
+
+return;
+
+}
+
+
+
+const chat =
+document.getElementById("chat");
+
+
+
+// 用户消息
+
+chat.innerHTML += `
+
+<div class="user">
+
+<span>
+${text}
+</span>
+
+</div>
+
+`;
+
+
+
+input.value="";
+
+
+
+// 加载
+
+const loading=document.createElement("div");
+
+loading.className="ai loading";
+
+loading.innerHTML=
+
+"<span>AI正在思考...</span>";
+
+chat.appendChild(loading);
+
+
+
+chat.scrollTop=chat.scrollHeight;
+
+
+
+try{
+
+
+const r=await fetch("/api/ai",{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":
+
+"application/json"
+
+
+},
+
+
+body:JSON.stringify({
+
+message:text
+
+})
+
+
+});
+
+
+
+const data =
+await r.json();
+
+
+
+loading.remove();
+
+
+
+let answer="";
+
+
+if(data.choices){
+
+answer=
+data.choices[0]
+.message
+.content;
+
+}
+
+else if(data.error){
+
+answer=data.error;
+
+}
+
+else{
+
+answer="AI暂时无法回复，请稍后再试";
+
+}
+
+
+
+chat.innerHTML += `
+
+
+<div class="ai">
+
+<span>
+
+${answer}
+
+</span>
+
+</div>
+
+
+`;
+
+
+
+}
+
+catch(e){
+
+
+loading.remove();
+
+
+chat.innerHTML += `
+
+
+<div class="ai">
+
+<span>
+
+连接AI服务失败，请稍后再试。
+
+</span>
+
+</div>
+
+
+`;
+
+}
+
+
+
+chat.scrollTop=
+chat.scrollHeight;
+
+
+}
+
+
+
+// 回车发送
+
+document
+.getElementById("msg")
+.addEventListener(
+"keydown",
+function(e){
+
+if(e.key==="Enter" && !e.shiftKey){
+
+e.preventDefault();
+
+send();
+
+}
+
+});
+
+
 </script>
-</body></html>
+
+
+</body>
+
+</html>
