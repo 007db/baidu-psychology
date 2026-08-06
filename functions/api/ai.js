@@ -4,81 +4,160 @@ export async function onRequestPost(context) {
 
     const { request, env } = context;
 
-    const body = await request.json();
 
-    const message = body.message;
+    // 检查 DeepSeek Key 是否存在
+    console.log(
+      "DeepSeek Key 是否存在:",
+      !!env.DEEPSEEK_API_KEY
+    );
 
-    if (!message) {
+
+    if (!env.DEEPSEEK_API_KEY) {
+
       return new Response(
         JSON.stringify({
-          error:"请输入消息"
+          error: "DEEPSEEK_API_KEY 未配置"
         }),
         {
-          status:400,
-          headers:{
-            "Content-Type":"application/json"
+          status: 500,
+          headers: {
+            "Content-Type": "application/json"
           }
         }
       );
+
     }
+
+
+    const { message } = await request.json();
+
+
+    if (!message) {
+
+      return new Response(
+        JSON.stringify({
+          error: "请输入咨询内容"
+        }),
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+    }
+
 
 
     const response = await fetch(
       "https://api.deepseek.com/chat/completions",
       {
-        method:"POST",
-        headers:{
+
+        method: "POST",
+
+        headers: {
+
           "Authorization":
             `Bearer ${env.DEEPSEEK_API_KEY}`,
-          "Content-Type":"application/json"
+
+          "Content-Type":
+            "application/json"
+
         },
-        body:JSON.stringify({
 
-          model:"deepseek-chat",
 
-          messages:[
+        body: JSON.stringify({
+
+          model: "deepseek-chat",
+
+
+          messages: [
+
             {
-              role:"system",
+              role: "system",
+
               content:
-              "你是摆渡心理AI助手，请提供温和、专业、安全的心理支持。"
+              "你是摆渡心理AI助手，为用户提供温和、专业、安全的心理支持。不要进行医疗诊断，不替代专业心理咨询。遇到危机风险时，建议用户寻求专业帮助。"
             },
+
+
             {
-              role:"user",
-              content:message
+              role: "user",
+
+              content: message
+
             }
-          ]
+
+          ],
+
+
+          temperature: 0.7
 
         })
+
+      }
+
+    );
+
+
+
+    const result = await response.text();
+
+
+
+    return new Response(
+      result,
+      {
+
+        status: response.status,
+
+        headers: {
+
+          "Content-Type":
+          "application/json"
+
+        }
+
       }
     );
 
 
-    const data = await response.text();
+
+  } catch (error) {
 
 
-    return new Response(data,{
-      status:response.status,
-      headers:{
-        "Content-Type":"application/json"
-      }
-    });
+    console.error(
+      "AI接口错误:",
+      error
+    );
 
-
-  } catch(error){
 
     return new Response(
+
       JSON.stringify({
 
-        error:"AI接口异常",
-        detail:error.message
+        error:
+        "AI服务暂时异常",
+
+        detail:
+        error.message
 
       }),
+
       {
-        status:500,
-        headers:{
-          "Content-Type":"application/json"
+
+        status: 500,
+
+        headers: {
+
+          "Content-Type":
+          "application/json"
+
         }
+
       }
+
     );
 
   }
