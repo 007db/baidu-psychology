@@ -7,171 +7,111 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>摆渡心理 - 在线预约</title>
-
+<title>摆渡心理在线预约</title>
 
 <style>
 
 body{
-
 margin:0;
-
-font-family:
-"Microsoft YaHei",
-Arial;
-
 background:#f3f9ff;
-
+font-family:"Microsoft YaHei",Arial;
 }
-
 
 .container{
-
 max-width:650px;
-
 margin:30px auto;
-
 padding:20px;
-
 }
-
 
 h1{
-
 text-align:center;
-
 color:#0077c8;
-
 }
-
-
 
 .card{
 
-background:white;
-
+background:#fff;
 padding:25px;
-
 border-radius:16px;
-
-box-shadow:
-0 5px 20px rgba(0,0,0,.08);
+box-shadow:0 5px 20px rgba(0,0,0,.08);
 
 }
-
-
-
-label{
-
-display:block;
-
-margin-top:15px;
-
-color:#333;
-
-}
-
-
 
 input,
 select,
 textarea{
 
-
 width:100%;
-
 box-sizing:border-box;
-
-margin-top:8px;
-
 padding:12px;
-
-border-radius:8px;
-
+margin-top:8px;
 border:1px solid #ccc;
-
+border-radius:8px;
 font-size:15px;
 
 }
-
 
 
 textarea{
 
 height:100px;
 
-resize:none;
+}
+
+
+label{
+
+display:block;
+margin-top:15px;
 
 }
 
 
-
 button{
 
-
-margin-top:20px;
-
 width:100%;
-
+margin-top:20px;
 padding:14px;
 
 background:#0077c8;
 
 color:white;
 
-border:none;
+border:0;
 
 border-radius:10px;
 
 font-size:17px;
 
-cursor:pointer;
-
-
 }
 
 
-
-button:hover{
-
-background:#005fa3;
-
-}
-
-
-
-.result{
-
-margin-top:20px;
+#result{
 
 text-align:center;
-
-font-size:16px;
+margin-top:20px;
 
 }
-
 
 
 .hotline{
 
-text-align:center;
-
 margin-top:25px;
+
+text-align:center;
 
 }
 
 
-
 .hotline a{
 
-color:#e53935;
+color:red;
 
 font-weight:bold;
 
 text-decoration:none;
 
 }
-
 
 
 </style>
@@ -193,160 +133,92 @@ text-decoration:none;
 <div class="card">
 
 
-<form id="form">
+<form id="bookingForm">
 
 
-<label>
-姓名
-</label>
+<label>姓名</label>
 
-<input 
-id="name"
-required
-placeholder="请输入姓名">
+<input id="name" required>
 
 
-<label>
-联系电话
-</label>
+<label>联系电话</label>
 
-<input
-id="phone"
-required
-placeholder="请输入手机号">
+<input id="phone" required>
 
 
-<label>
-微信号（可选）
-</label>
+<label>微信号</label>
 
-<input
-id="wechat"
-placeholder="请输入微信号">
+<input id="wechat">
 
 
-<label>
-咨询类型
-</label>
-
+<label>咨询类型</label>
 
 <select id="type">
 
+<option>情绪压力</option>
 
-<option>
-情绪压力
-</option>
+<option>婚恋关系</option>
 
+<option>青少年成长</option>
 
-<option>
-婚恋关系
-</option>
+<option>职场压力</option>
 
-
-<option>
-青少年成长
-</option>
-
-
-<option>
-职场压力
-</option>
-
-
-<option>
-其他
-</option>
-
+<option>其他</option>
 
 </select>
 
 
+<label>预约日期</label>
 
-<label>
-预约日期
-</label>
-
-
-<input
-type="date"
-id="date">
+<input type="date" id="date">
 
 
-
-<label>
-预约时间
-</label>
-
+<label>预约时间</label>
 
 <select id="time">
 
-<option>
-上午 9:00-12:00
-</option>
+<option>上午 9:00-12:00</option>
 
+<option>下午 14:00-18:00</option>
 
-<option>
-下午 14:00-18:00
-</option>
-
-
-<option>
-晚上 19:00-22:00
-</option>
-
+<option>晚上 19:00-22:00</option>
 
 </select>
 
 
+<label>留言</label>
 
-<label>
-留言说明
-</label>
-
-
-<textarea
-id="message"
-placeholder="请简单描述您的情况">
-</textarea>
-
+<textarea id="message"></textarea>
 
 
 <button type="submit">
-
 提交预约
-
 </button>
 
 
 </form>
 
 
-
-<div id="result" class="result"></div>
+<div id="result"></div>
 
 
 </div>
-
 
 
 <div class="hotline">
 
-心理危机干预热线：
+心理危机干预热线
 
 <br>
 
 <a href="tel:4000071995">
-
 400 007 1995
-
 </a>
 
-
 </div>
 
 
 </div>
-
 
 
 
@@ -354,7 +226,7 @@ placeholder="请简单描述您的情况">
 
 
 document
-.getElementById("form")
+.getElementById("bookingForm")
 .addEventListener(
 "submit",
 async function(e){
@@ -363,68 +235,50 @@ async function(e){
 e.preventDefault();
 
 
-
 const result =
 document.getElementById("result");
 
 
-result.innerHTML =
-"正在提交，请稍候...";
-
+result.innerHTML="正在提交...";
 
 
 try{
 
 
-const res =
-await fetch(
-"/api/booking",
-{
+const response =
+await fetch("/api/booking",{
 
 
 method:"POST",
 
-
 headers:{
 
-
-"Content-Type":
-
-"application/json"
+"Content-Type":"application/json"
 
 },
 
-
 body:JSON.stringify({
 
-
 name:
-document.getElementById("name").value,
-
+name.value,
 
 phone:
-document.getElementById("phone").value,
-
+phone.value,
 
 wechat:
-document.getElementById("wechat").value,
-
+wechat.value,
 
 type:
-document.getElementById("type").value,
-
+type.value,
 
 date:
-document.getElementById("date").value,
-
+date.value,
 
 time:
-document.getElementById("time").value,
-
+time.value,
 
 message:
-document.getElementById("message").value
-
+message.value
 
 })
 
@@ -432,47 +286,36 @@ document.getElementById("message").value
 });
 
 
-
 const data =
-await res.json();
+await response.json();
 
 
 
 if(data.success){
 
-
 result.innerHTML=
-
-"✅ 预约提交成功，我们会尽快联系您";
-
-
-document
-.getElementById("form")
-.reset();
+"✅ 预约成功，我们会尽快联系您";
 
 
-}
+bookingForm.reset();
 
-else{
+
+}else{
 
 
 result.innerHTML=
-
-"提交失败，请稍后重试";
+data.error || "提交失败";
 
 
 }
 
 
 
-}
-
-catch(err){
+}catch(e){
 
 
 result.innerHTML=
-
-"网络错误，请稍后再试";
+"网络异常，请稍后重试";
 
 
 }
@@ -483,7 +326,6 @@ result.innerHTML=
 
 
 </script>
-
 
 
 </body>
