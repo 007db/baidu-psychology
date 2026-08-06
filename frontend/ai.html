@@ -1,12 +1,14 @@
-<h1>AI心理助手</h1>
+<h1>DeepSeek AI心理助手</h1>
 <textarea id=m></textarea>
-<button onclick=send()>发送</button>
+<button onclick=go()>发送</button>
 <pre id=r></pre>
 <script>
-async function send(){
-let x=await fetch('/api/ai',{method:'POST',
+async function go(){
+let x=await fetch('/api/ai',{
+method:'POST',
 headers:{'Content-Type':'application/json'},
-body:JSON.stringify({message:m.value})});
+body:JSON.stringify({message:m.value})
+});
 r.innerText=await x.text();
 }
 </script>

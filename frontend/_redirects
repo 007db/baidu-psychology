@@ -1,4 +1,6 @@
+/login /login.html 200
+/admin /admin.html 200
+/dashboard /dashboard.html 200
+/tenant /tenant.html 200
 /ai /ai.html 200
 /booking /booking.html 200
-/admin /admin.html 200
-/member /member.html 200

@@ -1,12 +1,2 @@
-<h1>在线预约</h1>
-<input id=name placeholder=姓名>
-<input id=phone placeholder=电话>
-<button onclick=submitBook()>提交</button>
-<script>
-async function submitBook(){
-await fetch('/api/booking',{method:'POST',
-headers:{'Content-Type':'application/json'},
-body:JSON.stringify({name:name.value,phone:phone.value})});
-alert('预约提交成功');
-}
-</script>
+<h1>预约中心</h1>
+<p>企业用户预约管理</p>

@@ -1,17 +1,16 @@
-# 摆渡心理 Sprint 7.7 真实商业运营后台版
+# 摆渡心理 Sprint 7.8 企业级权限 + 管理员登录 + SaaS租户版
 
-功能：
-- Cloudflare Pages 部署
-- D1 数据库
-- 管理后台
-- 预约管理
-- AI使用记录接口
-- DeepSeek接口结构
+升级内容：
+- 管理员登录基础框架
+- 企业租户模型
+- 角色权限结构
+- 咨询师/管理员/企业账户基础接口
+- D1 SaaS数据结构
 
-部署：
+Cloudflare Pages:
 Root directory: .
 Build output: frontend
 
-绑定：
+Bindings:
 BAIDU_PSYCHOLOGY_DB
 DEEPSEEK_API_KEY
