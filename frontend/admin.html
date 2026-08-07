@@ -5,9 +5,13 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
 
-<title>摆渡心理管理后台</title>
+
+<title>
+摆渡心理管理后台 V9.0
+</title>
 
 
 <style>
@@ -16,20 +20,38 @@ body{
 
 margin:0;
 
-font-family:"Microsoft YaHei";
+font-family:
+
+"Microsoft YaHei",
+Arial;
 
 background:#f3f9ff;
+
+color:#333;
 
 }
 
 
-.header{
 
-background:#0077c8;
+.container{
 
-color:white;
+max-width:1200px;
+
+margin:30px auto;
 
 padding:20px;
+
+}
+
+
+
+.header{
+
+background:white;
+
+padding:25px;
+
+border-radius:16px;
 
 display:flex;
 
@@ -37,12 +59,92 @@ justify-content:space-between;
 
 align-items:center;
 
+box-shadow:
+0 5px 20px rgba(0,0,0,.08);
+
 }
 
 
-.container{
 
-padding:20px;
+.logo{
+
+font-size:26px;
+
+font-weight:bold;
+
+color:#0077c8;
+
+}
+
+
+
+.logout{
+
+background:#e53935;
+
+color:white;
+
+border:0;
+
+padding:10px 20px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+}
+
+
+
+.dashboard{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:20px;
+
+margin-top:25px;
+
+}
+
+
+
+.stat{
+
+background:white;
+
+padding:25px;
+
+border-radius:16px;
+
+box-shadow:
+0 5px 20px rgba(0,0,0,.08);
+
+text-align:center;
+
+}
+
+
+
+.stat h3{
+
+color:#0077c8;
+
+margin:0;
+
+}
+
+
+
+.number{
+
+font-size:35px;
+
+font-weight:bold;
+
+margin-top:15px;
 
 }
 
@@ -52,13 +154,14 @@ padding:20px;
 
 background:white;
 
-padding:20px;
+margin-top:25px;
 
-border-radius:15px;
+padding:25px;
 
-box-shadow:0 5px 20px rgba(0,0,0,.1);
+border-radius:16px;
 
-margin-bottom:20px;
+box-shadow:
+0 5px 20px rgba(0,0,0,.08);
 
 }
 
@@ -78,41 +181,27 @@ width:100%;
 
 border-collapse:collapse;
 
+margin-top:15px;
+
 }
 
 
 
 th{
 
-background:#0077c8;
-
-color:white;
-
-padding:12px;
+background:#eef7ff;
 
 }
 
 
 
-td{
+th,td{
 
-padding:10px;
+padding:12px;
 
 border-bottom:1px solid #ddd;
 
 text-align:center;
-
-}
-
-
-
-select{
-
-padding:8px;
-
-border-radius:6px;
-
-border:1px solid #ccc;
 
 }
 
@@ -124,11 +213,11 @@ background:#0077c8;
 
 color:white;
 
-border:0;
+border:none;
 
 padding:8px 15px;
 
-border-radius:6px;
+border-radius:8px;
 
 cursor:pointer;
 
@@ -144,80 +233,89 @@ background:#005fa3;
 
 
 
-.msg{
+.badge{
 
-text-align:center;
+padding:5px 10px;
 
-margin:15px;
+border-radius:15px;
 
-color:green;
+background:#e8f5e9;
+
+color:#2e7d32;
 
 }
 
 
-
 </style>
 
+
 </head>
+<!-- ===============================
+     预约管理
+================================ -->
 
-
-
-<body>
-
-
-
-<div class="header">
-
-
-<div>
-
-<h2 style="color:white;margin:0">
-
-摆渡心理管理中心
-
-</h2>
-
-</div>
-
-
-<div>
-
-管理员后台
-
-</div>
-
-
-</div>
-
-
-
-
-<div class="container">
-
-
-
-<div class="card">
-
+<section id="appointments" class="admin-section">
 
 <h2>
-
-预约管理
-
+📅 预约管理
 </h2>
 
 
+<div class="toolbar">
 
-<div id="msg" class="msg"></div>
+<input 
+id="appointmentSearch"
+placeholder="搜索客户/咨询师"
+/>
+
+
+<select id="appointmentStatus">
+
+<option value="">
+全部状态
+</option>
+
+<option value="pending">
+待确认
+</option>
+
+
+<option value="confirmed">
+已确认
+</option>
+
+
+<option value="finished">
+已完成
+</option>
+
+
+<option value="cancelled">
+已取消
+</option>
+
+
+</select>
+
+
+<button onclick="loadAppointments()">
+查询
+</button>
+
+
+</div>
 
 
 
-<table>
-
+<table class="admin-table">
 
 <thead>
 
-
 <tr>
+
+<th>
+编号
+</th>
 
 
 <th>
@@ -226,17 +324,7 @@ color:green;
 
 
 <th>
-电话
-</th>
-
-
-<th>
-微信
-</th>
-
-
-<th>
-咨询类型
+咨询师
 </th>
 
 
@@ -246,7 +334,224 @@ color:green;
 
 
 <th>
-留言
+状态
+</th>
+
+
+<th>
+操作
+</th>
+
+
+</tr>
+
+</thead>
+
+
+<tbody id="appointmentList">
+
+
+<tr>
+
+<td colspan="6">
+
+正在加载预约数据...
+
+</td>
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</section>
+
+
+
+
+
+<!-- ===============================
+     咨询记录管理
+================================ -->
+
+
+<section id="records" 
+class="admin-section">
+
+
+<h2>
+📝 咨询记录
+</h2>
+
+
+
+<div class="toolbar">
+
+
+<input
+id="recordSearch"
+placeholder="搜索咨询记录"
+/>
+
+
+<button onclick="loadRecords()">
+
+查询
+
+</button>
+
+
+</div>
+
+
+
+
+<table class="admin-table">
+
+
+<thead>
+
+
+<tr>
+
+<th>
+编号
+</th>
+
+
+<th>
+客户
+</th>
+
+
+<th>
+咨询师
+</th>
+
+
+<th>
+咨询主题
+</th>
+
+
+<th>
+日期
+</th>
+
+
+<th>
+查看
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+<tbody id="recordList">
+
+
+<tr>
+
+<td colspan="6">
+
+暂无数据
+
+</td>
+
+</tr>
+
+
+</tbody>
+
+
+
+</table>
+
+
+
+</section>
+
+
+
+
+
+<!-- ===============================
+     客户档案
+================================ -->
+
+
+<section id="clients"
+class="admin-section">
+
+
+<h2>
+
+👥 客户档案
+
+</h2>
+
+
+
+
+<div class="toolbar">
+
+
+<input
+id="clientSearch"
+placeholder="姓名/手机号"
+/>
+
+
+<button onclick="loadClients()">
+
+搜索
+
+</button>
+
+
+
+</div>
+
+
+
+
+<table class="admin-table">
+
+
+<thead>
+
+
+<tr>
+
+<th>
+客户ID
+</th>
+
+
+<th>
+姓名
+</th>
+
+
+<th>
+手机号
+</th>
+
+
+<th>
+年龄
+</th>
+
+
+<th>
+咨询次数
 </th>
 
 
@@ -256,7 +561,879 @@ color:green;
 
 
 <th>
-咨询师
+详情
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody id="clientList">
+
+
+<tr>
+
+<td colspan="7">
+
+加载客户资料...
+
+</td>
+
+
+</tr>
+
+
+</tbody>
+
+
+
+</table>
+
+
+
+</section>
+const TOKEN =
+localStorage.getItem("token");
+
+
+
+async function loadAppointments(){
+
+
+let status =
+document
+.getElementById(
+"appointmentStatus"
+)
+.value;
+
+
+
+let res =
+await fetch(
+
+"/api/admin/appointments?status="
++status,
+
+{
+
+headers:{
+
+Authorization:
+"Bearer "+TOKEN
+
+}
+
+}
+
+);
+
+
+
+let data =
+await res.json();
+
+
+
+let html="";
+
+
+
+data.forEach(item=>{
+
+
+html+=`
+
+<tr>
+
+<td>
+${item.id}
+</td>
+
+
+<td>
+${item.client}
+</td>
+
+
+<td>
+${item.consultant}
+</td>
+
+
+<td>
+${item.time}
+</td>
+
+
+<td>
+
+<span class="tag">
+
+${item.status}
+
+</span>
+
+
+</td>
+
+
+<td>
+
+
+<button
+onclick="
+updateAppointment(${item.id},'confirmed')
+">
+
+确认
+
+</button>
+
+
+
+<button
+onclick="
+updateAppointment(${item.id},'cancelled')
+">
+
+取消
+
+</button>
+
+
+</td>
+
+
+</tr>
+
+
+`;
+
+});
+
+
+document
+.getElementById(
+"appointmentList"
+)
+.innerHTML=html;
+
+
+}
+
+
+
+
+async function loadRecords(){
+
+
+let res =
+await fetch(
+
+"/api/admin/records",
+
+{
+
+headers:{
+
+Authorization:
+"Bearer "+TOKEN
+
+}
+
+}
+
+);
+
+
+
+let data =
+await res.json();
+
+
+
+let html="";
+
+
+
+data.forEach(item=>{
+
+
+html+=`
+
+<tr>
+
+
+<td>
+${item.id}
+</td>
+
+
+<td>
+${item.client}
+</td>
+
+
+<td>
+${item.consultant}
+</td>
+
+
+<td>
+${item.subject}
+</td>
+
+
+<td>
+${item.created_at}
+</td>
+
+
+<td>
+
+
+<button>
+
+查看
+
+</button>
+
+
+</td>
+
+
+</tr>
+
+
+`;
+
+
+});
+
+
+document
+.getElementById(
+"recordList"
+)
+.innerHTML=html;
+
+
+}
+
+
+
+
+
+async function loadClients(){
+
+
+let res =
+await fetch(
+
+"/api/admin/clients",
+
+{
+
+headers:{
+
+Authorization:
+"Bearer "+TOKEN
+
+}
+
+}
+
+);
+
+
+
+let data =
+await res.json();
+
+
+
+let html="";
+
+
+
+data.forEach(item=>{
+
+
+html+=`
+
+<tr>
+
+<td>
+${item.id}
+</td>
+
+
+<td>
+${item.name}
+</td>
+
+
+<td>
+${item.phone}
+</td>
+
+
+<td>
+${item.age}
+</td>
+
+
+<td>
+${item.sessions}
+</td>
+
+
+<td>
+正常
+</td>
+
+
+<td>
+
+
+<button>
+
+详情
+
+</button>
+
+
+</td>
+
+
+</tr>
+
+
+`;
+
+});
+
+
+document
+.getElementById(
+"clientList"
+)
+.innerHTML=html;
+
+
+}
+
+
+
+
+
+
+async function updateAppointment(id,status){
+
+
+await fetch(
+
+"/api/admin/appointments",
+
+{
+
+method:"PUT",
+
+headers:{
+
+
+"Content-Type":
+"application/json",
+
+
+Authorization:
+"Bearer "+TOKEN
+
+
+},
+
+
+body:
+
+JSON.stringify({
+
+id,
+
+status
+
+})
+
+
+}
+
+);
+
+
+loadAppointments();
+
+}body{
+
+font-family:
+"Microsoft YaHei";
+
+background:#f5f7fb;
+
+}
+
+
+
+.admin-section{
+
+background:white;
+
+padding:25px;
+
+margin:20px;
+
+border-radius:16px;
+
+box-shadow:
+0 5px 20px #ddd;
+
+}
+
+
+
+.toolbar{
+
+display:flex;
+
+gap:15px;
+
+margin-bottom:20px;
+
+}
+
+
+
+.toolbar input,
+.toolbar select{
+
+padding:10px;
+
+border-radius:8px;
+
+border:1px solid #ddd;
+
+}
+
+
+
+button{
+
+background:#1677ff;
+
+color:white;
+
+border:none;
+
+padding:8px 16px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+}
+
+
+
+.admin-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+}
+
+
+
+.admin-table th{
+
+background:#eef5ff;
+
+padding:14px;
+
+}
+
+
+
+.admin-table td{
+
+padding:12px;
+
+border-bottom:
+1px solid #eee;
+
+}
+
+
+
+.tag{
+
+padding:5px 10px;
+
+background:#e8f3ff;
+
+border-radius:20px;
+
+}export async function onRequest(context){
+
+
+const {
+
+request,
+
+env
+
+}=context;
+
+
+
+if(request.method==="GET"){
+
+
+const data =
+await env.DB
+.prepare(
+
+`
+
+SELECT
+
+a.id,
+
+u.username client,
+
+c.name consultant,
+
+a.time,
+
+a.status
+
+
+FROM appointments a
+
+
+LEFT JOIN users u
+
+ON a.client_id=u.id
+
+
+LEFT JOIN consultants c
+
+ON a.consultant_id=c.id
+
+
+ORDER BY a.id DESC
+
+
+`
+
+)
+.all();
+
+
+
+return Response.json(
+data.results
+);
+
+
+}
+
+
+
+if(request.method==="PUT"){
+
+
+let body =
+await request.json();
+
+
+
+await env.DB
+.prepare(
+
+`
+
+UPDATE appointments
+
+SET status=?
+
+WHERE id=?
+
+`
+
+)
+
+.bind(
+
+body.status,
+
+body.id
+
+)
+
+.run();
+
+
+
+return Response.json({
+
+success:true
+
+});
+
+
+}
+
+
+}export async function onRequest({env}){
+
+
+let result =
+
+await env.DB
+.prepare(
+
+`
+
+SELECT
+
+r.id,
+
+u.username client,
+
+c.name consultant,
+
+r.subject,
+
+r.created_at
+
+
+FROM records r
+
+
+LEFT JOIN users u
+
+ON r.client_id=u.id
+
+
+LEFT JOIN consultants c
+
+ON r.consultant_id=c.id
+
+
+ORDER BY r.id DESC
+
+
+`
+
+)
+.all();
+
+
+
+return Response.json(
+result.results
+);
+
+
+}export async function onRequest({env}){
+
+
+let result=
+
+await env.DB
+.prepare(
+
+`
+
+SELECT
+
+u.id,
+
+u.username name,
+
+u.phone,
+
+c.age,
+
+COUNT(r.id)
+sessions
+
+
+FROM users u
+
+
+LEFT JOIN clients c
+
+ON c.user_id=u.id
+
+
+LEFT JOIN records r
+
+ON r.client_id=u.id
+
+
+WHERE u.role='customer'
+
+
+GROUP BY u.id
+
+
+`
+
+)
+.all();
+
+
+
+return Response.json(
+result.results
+);
+
+
+
+}CREATE TABLE appointments(
+
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+client_id INTEGER,
+
+consultant_id INTEGER,
+
+time TEXT,
+
+status TEXT DEFAULT 'pending',
+
+created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+
+);
+
+
+
+CREATE TABLE records(
+
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+client_id INTEGER,
+
+consultant_id INTEGER,
+
+subject TEXT,
+
+content TEXT,
+
+created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+
+);
+
+
+
+CREATE TABLE clients(
+
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+user_id INTEGER,
+
+age INTEGER,
+
+gender TEXT,
+
+note TEXT
+
+);<!-- ===============================
+     企业EAP管理
+================================ -->
+
+<section 
+id="eap"
+class="admin-section">
+
+
+<h2>
+🏢 企业EAP管理
+</h2>
+
+
+
+<div class="toolbar">
+
+
+<input
+id="eapSearch"
+placeholder="搜索企业名称"
+/>
+
+
+
+<button onclick="loadEAP()">
+
+查询
+
+</button>
+
+
+
+<button 
+onclick="addEnterprise()">
+
+新增企业
+
+</button>
+
+
+</div>
+
+
+
+
+<table class="admin-table">
+
+
+<thead>
+
+
+<tr>
+
+<th>
+ID
+</th>
+
+
+<th>
+企业名称
+</th>
+
+
+<th>
+联系人
+</th>
+
+
+<th>
+员工数量
+</th>
+
+
+<th>
+服务套餐
+</th>
+
+
+<th>
+状态
 </th>
 
 
@@ -272,43 +1449,298 @@ color:green;
 
 
 
-<tbody id="list">
+<tbody id="eapList">
+
+
+<tr>
+
+<td colspan="7">
+
+暂无企业数据
+
+</td>
+
+
+</tr>
 
 
 </tbody>
 
+
+</table>
+
+
+</section><!-- ===============================
+     咨询师管理
+================================ -->
+
+
+<section
+id="consultants"
+class="admin-section">
+
+
+<h2>
+
+👨‍⚕️ 咨询师管理
+
+</h2>
+
+
+
+
+<div class="toolbar">
+
+
+<input
+
+id="consultantSearch"
+
+placeholder="姓名/专业"
+/>
+
+
+
+<button onclick="loadConsultants()">
+
+搜索
+
+</button>
+
+
+</div>
+
+
+
+
+
+<table class="admin-table">
+
+
+<thead>
+
+
+<tr>
+
+<th>
+编号
+</th>
+
+
+<th>
+姓名
+</th>
+
+
+<th>
+专业方向
+</th>
+
+
+<th>
+预约数量
+</th>
+
+
+<th>
+状态
+</th>
+
+
+<th>
+操作
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+<tbody id="consultantList">
+
+
+<tr>
+
+<td colspan="6">
+
+加载中...
+
+</td>
+
+
+</tr>
+
+
+</tbody>
 
 
 </table>
 
 
 
+</section><!-- ===============================
+     数据统计
+================================ -->
+
+
+<section
+id="statistics"
+class="admin-section">
+
+
+<h2>
+
+📊 数据统计中心
+
+</h2>
+
+
+
+
+<div class="stat-grid">
+
+
+<div class="stat-card">
+
+
+<h3>
+今日预约
+</h3>
+
+
+<p id="todayAppointments">
+0
+</p>
+
+
 </div>
 
 
 
+
+<div class="stat-card">
+
+
+<h3>
+咨询总量
+</h3>
+
+
+<p id="totalRecords">
+
+0
+
+</p>
+
+
 </div>
 
 
 
 
 
-<script>
+<div class="stat-card">
 
 
-let consultants=[];
+<h3>
+注册用户
+
+</h3>
+
+
+<p id="totalUsers">
+
+0
+
+</p>
+
+
+</div>
 
 
 
-//加载咨询师
 
-async function loadConsultants(){
+
+<div class="stat-card">
+
+
+<h3>
+企业客户
+
+</h3>
+
+
+<p id="totalEnterprise">
+
+0
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="chart-box">
+
+
+<canvas 
+id="businessChart">
+
+</canvas>
+
+
+</div>
+
+
+
+</section><li onclick="showPage('eap')">
+
+🏢 企业EAP
+
+</li>
+
+
+
+<li onclick="showPage('consultants')">
+
+👨‍⚕️ 咨询师管理
+
+</li>
+
+
+
+<li onclick="showPage('statistics')">
+
+📊 数据统计
+
+</li>async function loadEAP(){
 
 
 const res =
 await fetch(
-"/api/consultants"
+"/api/admin/eap",
+{
+
+headers:{
+Authorization:
+"Bearer "+
+localStorage.token
+}
+
+}
+
 );
+
 
 
 const data =
@@ -316,164 +1748,62 @@ await res.json();
 
 
 
-if(data.success){
-
-consultants=data.data;
-
-}
+let html="";
 
 
 
-}
+data.forEach(e=>{
 
 
-
-
-
-//加载预约
-
-
-async function loadBookings(){
-
-
-
-const res =
-await fetch(
-"/api/appointments"
-);
-
-
-
-const data =
-await res.json();
-
-
-
-const list =
-document.getElementById("list");
-
-
-
-list.innerHTML="";
-
-
-
-if(data.success){
-
-
-
-data.data.forEach(item=>{
-
-
-let options="";
-
-
-consultants.forEach(c=>{
-
-
-let selected="";
-
-
-if(item.consultant===c.name){
-
-selected="selected";
-
-}
-
-
-options +=`
-
-<option value="${c.name}" ${selected}>
-
-${c.name}
-
-</option>
-
-`;
-
-});
-
-
-
-
-list.innerHTML += `
-
+html+=`
 
 <tr>
 
 
 <td>
-${item.name || ""}
+${e.id}
 </td>
 
 
 <td>
-${item.phone || ""}
+${e.company}
 </td>
 
 
 <td>
-${item.wechat || ""}
+${e.contact}
 </td>
 
 
 <td>
-${item.type || ""}
+${e.employee_count}
 </td>
 
 
 <td>
-${item.appointment_time || ""}
+${e.package}
 </td>
 
 
 <td>
-${item.message || ""}
+${e.status}
 </td>
-
 
 
 <td>
 
-${item.status || "待处理"}
+<button>
 
-</td>
-
-
-
-<td>
-
-
-<select id="c${item.id}">
-
-
-<option value="">
-
-未分配
-
-</option>
-
-
-${options}
-
-
-</select>
-
-
-
-</td>
-
-
-
-<td>
-
-
-<button onclick="assign(${item.id})">
-
-分配
+编辑
 
 </button>
 
+
+<button>
+
+删除
+
+</button>
 
 
 </td>
@@ -482,86 +1812,567 @@ ${options}
 </tr>
 
 
+`;
+
+});
+
+
+document
+.getElementById(
+"eapList"
+)
+.innerHTML=html;
+
+
+}async function loadConsultants(){
+
+
+const res=
+await fetch(
+"/api/admin/consultants",
+{
+
+headers:{
+Authorization:
+"Bearer "+
+localStorage.token
+}
+
+}
+
+);
+
+
+
+const data=
+await res.json();
+
+
+let html="";
+
+
+
+data.forEach(c=>{
+
+
+html+=`
+
+<tr>
+
+
+<td>
+${c.id}
+</td>
+
+
+<td>
+${c.name}
+</td>
+
+
+<td>
+${c.specialty}
+</td>
+
+
+<td>
+${c.orders}
+</td>
+
+
+<td>
+
+${c.status}
+
+</td>
+
+
+
+<td>
+
+
+<button
+onclick="
+toggleConsultant(${c.id})
+">
+
+切换状态
+
+</button>
+
+
+</td>
+
+
+
+</tr>
 
 `;
 
 
-
 });
 
 
-}
+
+document
+.getElementById(
+"consultantList"
+)
+.innerHTML=html;
 
 
-}
+}async function loadStatistics(){
 
 
+const res=
+await fetch(
 
+"/api/admin/statistics",
 
+{
 
+headers:{
 
-//分配咨询师
+Authorization:
 
-
-async function assign(id){
-
-
-
-const consultant =
-
-document.getElementById(
-"c"+id
-).value;
-
-
-
-
-if(!consultant){
-
-
-alert("请选择咨询师");
-
-return;
-
+"Bearer "+
+localStorage.token
 
 }
 
+}
 
+);
+
+
+
+const data=
+await res.json();
+
+
+
+document
+.getElementById(
+"todayAppointments"
+)
+.innerText=
+data.today;
+
+
+
+document
+.getElementById(
+"totalRecords"
+)
+.innerText=
+data.records;
+
+
+
+document
+.getElementById(
+"totalUsers"
+)
+.innerText=
+data.users;
+
+
+
+document
+.getElementById(
+"totalEnterprise"
+)
+.innerText=
+data.enterprise;
+
+
+}<!-- ===============================
+     企业EAP管理
+================================ -->
+
+<section 
+id="eap"
+class="admin-section">
+
+
+<h2>
+🏢 企业EAP管理
+</h2>
+
+
+
+<div class="toolbar">
+
+
+<input
+id="eapSearch"
+placeholder="搜索企业名称"
+/>
+
+
+
+<button onclick="loadEAP()">
+
+查询
+
+</button>
+
+
+
+<button 
+onclick="addEnterprise()">
+
+新增企业
+
+</button>
+
+
+</div>
+
+
+
+
+<table class="admin-table">
+
+
+<thead>
+
+
+<tr>
+
+<th>
+ID
+</th>
+
+
+<th>
+企业名称
+</th>
+
+
+<th>
+联系人
+</th>
+
+
+<th>
+员工数量
+</th>
+
+
+<th>
+服务套餐
+</th>
+
+
+<th>
+状态
+</th>
+
+
+<th>
+操作
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody id="eapList">
+
+
+<tr>
+
+<td colspan="7">
+
+暂无企业数据
+
+</td>
+
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</section><!-- ===============================
+     咨询师管理
+================================ -->
+
+
+<section
+id="consultants"
+class="admin-section">
+
+
+<h2>
+
+👨‍⚕️ 咨询师管理
+
+</h2>
+
+
+
+
+<div class="toolbar">
+
+
+<input
+
+id="consultantSearch"
+
+placeholder="姓名/专业"
+/>
+
+
+
+<button onclick="loadConsultants()">
+
+搜索
+
+</button>
+
+
+</div>
+
+
+
+
+
+<table class="admin-table">
+
+
+<thead>
+
+
+<tr>
+
+<th>
+编号
+</th>
+
+
+<th>
+姓名
+</th>
+
+
+<th>
+专业方向
+</th>
+
+
+<th>
+预约数量
+</th>
+
+
+<th>
+状态
+</th>
+
+
+<th>
+操作
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+<tbody id="consultantList">
+
+
+<tr>
+
+<td colspan="6">
+
+加载中...
+
+</td>
+
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+
+</section><!-- ===============================
+     数据统计
+================================ -->
+
+
+<section
+id="statistics"
+class="admin-section">
+
+
+<h2>
+
+📊 数据统计中心
+
+</h2>
+
+
+
+
+<div class="stat-grid">
+
+
+<div class="stat-card">
+
+
+<h3>
+今日预约
+</h3>
+
+
+<p id="todayAppointments">
+0
+</p>
+
+
+</div>
+
+
+
+
+<div class="stat-card">
+
+
+<h3>
+咨询总量
+</h3>
+
+
+<p id="totalRecords">
+
+0
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="stat-card">
+
+
+<h3>
+注册用户
+
+</h3>
+
+
+<p id="totalUsers">
+
+0
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="stat-card">
+
+
+<h3>
+企业客户
+
+</h3>
+
+
+<p id="totalEnterprise">
+
+0
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="chart-box">
+
+
+<canvas 
+id="businessChart">
+
+</canvas>
+
+
+</div>
+
+
+
+</section><li onclick="showPage('eap')">
+
+🏢 企业EAP
+
+</li>
+
+
+
+<li onclick="showPage('consultants')">
+
+👨‍⚕️ 咨询师管理
+
+</li>
+
+
+
+<li onclick="showPage('statistics')">
+
+📊 数据统计
+
+</li>async function loadEAP(){
 
 
 const res =
 await fetch(
-"/api/assign-consultant",
+"/api/admin/eap",
 {
 
-
-method:"POST",
-
-
 headers:{
+Authorization:
+"Bearer "+
+localStorage.token
+}
 
+}
 
-"Content-Type":
-
-"application/json"
-
-
-},
-
-
-body:JSON.stringify({
-
-
-appointment_id:id,
-
-
-consultant:consultant
-
-
-})
-
-
-});
+);
 
 
 
@@ -570,63 +2381,242 @@ await res.json();
 
 
 
-if(data.success){
+let html="";
 
 
 
-document.getElementById("msg").innerHTML=
-
-"✅ 分配成功";
+data.forEach(e=>{
 
 
+html+=`
 
-loadBookings();
+<tr>
 
+
+<td>
+${e.id}
+</td>
+
+
+<td>
+${e.company}
+</td>
+
+
+<td>
+${e.contact}
+</td>
+
+
+<td>
+${e.employee_count}
+</td>
+
+
+<td>
+${e.package}
+</td>
+
+
+<td>
+${e.status}
+</td>
+
+
+<td>
+
+<button>
+
+编辑
+
+</button>
+
+
+<button>
+
+删除
+
+</button>
+
+
+</td>
+
+
+</tr>
+
+
+`;
+
+});
+
+
+document
+.getElementById(
+"eapList"
+)
+.innerHTML=html;
+
+
+}async function loadConsultants(){
+
+
+const res=
+await fetch(
+"/api/admin/consultants",
+{
+
+headers:{
+Authorization:
+"Bearer "+
+localStorage.token
+}
 
 }
 
-else{
-
-
-alert(
-data.message
 );
 
 
+
+const data=
+await res.json();
+
+
+let html="";
+
+
+
+data.forEach(c=>{
+
+
+html+=`
+
+<tr>
+
+
+<td>
+${c.id}
+</td>
+
+
+<td>
+${c.name}
+</td>
+
+
+<td>
+${c.specialty}
+</td>
+
+
+<td>
+${c.orders}
+</td>
+
+
+<td>
+
+${c.status}
+
+</td>
+
+
+
+<td>
+
+
+<button
+onclick="
+toggleConsultant(${c.id})
+">
+
+切换状态
+
+</button>
+
+
+</td>
+
+
+
+</tr>
+
+`;
+
+
+});
+
+
+
+document
+.getElementById(
+"consultantList"
+)
+.innerHTML=html;
+
+
+}async function loadStatistics(){
+
+
+const res=
+await fetch(
+
+"/api/admin/statistics",
+
+{
+
+headers:{
+
+Authorization:
+
+"Bearer "+
+localStorage.token
+
 }
 
+}
+
+);
+
+
+
+const data=
+await res.json();
+
+
+
+document
+.getElementById(
+"todayAppointments"
+)
+.innerText=
+data.today;
+
+
+
+document
+.getElementById(
+"totalRecords"
+)
+.innerText=
+data.records;
+
+
+
+document
+.getElementById(
+"totalUsers"
+)
+.innerText=
+data.users;
+
+
+
+document
+.getElementById(
+"totalEnterprise"
+)
+.innerText=
+data.enterprise;
 
 
 }
-
-
-
-
-
-
-async function init(){
-
-
-await loadConsultants();
-
-
-await loadBookings();
-
-
-}
-
-
-
-
-init();
-
-
-
-</script>
-
-
-
-
-</body>
-
-</html>
