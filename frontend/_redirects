@@ -1,15 +1,4 @@
 /api/* /api/:splat 200
 
 
-/admin-login /admin-login.html 200
-
-/admin /admin.html 200
-
-
-/consultant /consultant.html 200
-
-
-/booking /booking.html 200
-
-
 /* /index.html 200
