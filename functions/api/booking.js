@@ -2,12 +2,15 @@ export async function onRequestPost({ request, env }) {
 
 try {
 
-
 const data = await request.json();
 
 
+const appointmentTime =
+`${data.date || ""} ${data.time || ""}`;
 
-const result = await env.DB.prepare(
+
+
+await env.DB.prepare(
 
 `
 INSERT INTO appointments
@@ -16,15 +19,13 @@ name,
 phone,
 wechat,
 type,
-date,
-time,
+appointment_time,
 message,
 status
 )
 
 VALUES
-(?,?,?,?,?,?,?,'待处理')
-
+(?,?,?,?,?,?,?)
 `
 
 )
@@ -38,11 +39,11 @@ data.wechat || "",
 
 data.type || "",
 
-data.date || "",
+appointmentTime,
 
-data.time || "",
+data.message || "",
 
-data.message || ""
+"待处理"
 
 )
 
@@ -54,15 +55,13 @@ return Response.json({
 
 success:true,
 
-id:result.meta.last_row_id,
-
 message:"预约提交成功"
 
 });
 
 
-
 }
+
 catch(error){
 
 
@@ -75,13 +74,12 @@ error:error.message
 },
 
 {
-
 status:500
+}
 
-});
+);
 
 
 }
-
 
 }
