@@ -1,9 +1,51 @@
-export async function onRequest({env}) {
-const result=await env.BAIDU_PSYCHOLOGY_DB.prepare(
-'SELECT * FROM appointments ORDER BY id DESC'
-).all();
+export async function onRequestGet({env}) {
 
-return new Response(JSON.stringify(result.results),{
-headers:{'Content-Type':'application/json'}
+
+try {
+
+
+const {results} = await env.DB.prepare(
+
+`
+SELECT *
+FROM appointments
+ORDER BY id DESC
+`
+
+)
+.all();
+
+
+
+return Response.json({
+
+success:true,
+
+data:results
+
 });
+
+
+}
+
+
+catch(error){
+
+
+return Response.json({
+
+success:false,
+
+error:error.message
+
+},
+
+{
+status:500
+});
+
+
+}
+
+
 }
