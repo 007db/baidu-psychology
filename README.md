@@ -1,12 +1,10 @@
-# 摆渡心理 V8.2 DeepSeek+D1+后台版
+# baidu-psychology-v9.0-final-part2-functions
 
-新增：
-1. DeepSeek实时AI接口
-2. D1预约存储
-3. 管理后台预约查看
+Cloudflare Pages Functions API 模块。
 
-Cloudflare变量:
-DEEPSEEK_API_KEY
-
-D1绑定:
-BAIDU_PSYCHOLOGY_DB
+包含:
+- JWT认证
+- DeepSeek AI接口
+- 在线预约API
+- 咨询记录API
+- 管理权限API
