@@ -7,21 +7,36 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>摆渡心理咨询师工作台</title>
+<title>
+摆渡心理 - 咨询师工作台
+</title>
 
 
 <style>
-
 
 body{
 
 margin:0;
 
 font-family:
+
 "Microsoft YaHei",
 Arial;
 
 background:#f3f9ff;
+
+color:#333;
+
+}
+
+
+.container{
+
+max-width:1100px;
+
+margin:30px auto;
+
+padding:20px;
 
 }
 
@@ -29,11 +44,14 @@ background:#f3f9ff;
 
 .header{
 
-background:#0077c8;
+background:white;
 
-color:white;
+padding:25px;
 
-padding:20px;
+border-radius:16px;
+
+box-shadow:
+0 5px 20px rgba(0,0,0,.08);
 
 display:flex;
 
@@ -45,25 +63,27 @@ align-items:center;
 
 
 
-.header h1{
+.logo{
 
-margin:0;
+font-size:24px;
 
-font-size:22px;
+font-weight:bold;
+
+color:#0077c8;
 
 }
 
 
 
-.header button{
+.logout{
 
-background:white;
+background:#e53935;
 
-color:#0077c8;
+color:white;
 
 border:none;
 
-padding:8px 15px;
+padding:10px 20px;
 
 border-radius:8px;
 
@@ -73,32 +93,18 @@ cursor:pointer;
 
 
 
-
-.container{
-
-padding:20px;
-
-max-width:1100px;
-
-margin:auto;
-
-}
-
-
-
-
 .card{
 
 background:white;
 
-padding:20px;
+margin-top:25px;
 
-border-radius:15px;
+padding:25px;
+
+border-radius:16px;
 
 box-shadow:
-0 5px 20px rgba(0,0,0,.1);
-
-margin-bottom:20px;
+0 5px 20px rgba(0,0,0,.08);
 
 }
 
@@ -112,12 +118,13 @@ color:#0077c8;
 
 
 
-
 table{
 
 width:100%;
 
 border-collapse:collapse;
+
+margin-top:15px;
 
 }
 
@@ -125,16 +132,13 @@ border-collapse:collapse;
 
 th{
 
-background:#0077c8;
-
-color:white;
-
-padding:12px;
+background:#eef7ff;
 
 }
 
 
 
+th,
 td{
 
 padding:12px;
@@ -149,14 +153,6 @@ text-align:center;
 
 button{
 
-cursor:pointer;
-
-}
-
-
-
-.action{
-
 background:#0077c8;
 
 color:white;
@@ -165,68 +161,148 @@ border:none;
 
 padding:8px 15px;
 
-border-radius:6px;
+border-radius:8px;
+
+cursor:pointer;
 
 }
 
 
 
-.refresh{
+button:hover{
 
-background:#00a67d;
+background:#005fa3;
 
-color:white;
+}
 
-border:none;
 
-padding:10px 20px;
+
+input,
+textarea,
+select{
+
+width:100%;
+
+box-sizing:border-box;
+
+padding:12px;
+
+margin-top:8px;
+
+border:1px solid #ccc;
 
 border-radius:8px;
 
-margin-bottom:15px;
+}
+
+
+
+textarea{
+
+height:120px;
+
+resize:none;
 
 }
 
 
 
-.empty{
+.form-row{
+
+margin-top:15px;
+
+}
+
+
+
+.record{
+
+background:#f8fbff;
+
+padding:15px;
+
+margin-top:15px;
+
+border-radius:10px;
+
+border-left:4px solid #0077c8;
+
+}
+
+
+
+.hidden{
+
+display:none;
+
+}
+
+
+
+.success{
+
+color:#008000;
 
 text-align:center;
 
-color:#999;
-
 }
 
+
+
+.error{
+
+color:red;
+
+text-align:center;
+
+}
 
 
 </style>
 
 
 </head>
-
-
-
 <body>
 
 
+<div class="container">
+
+
+<!-- 顶部 -->
 
 <div class="header">
-
-
-<h1>
-摆渡心理咨询师工作台
-</h1>
 
 
 <div>
 
 
-<span id="consultantName"></span>
+<div class="logo">
+
+摆渡心理咨询师工作台
+
+</div>
 
 
-<button onclick="logout()">
+<div style="margin-top:8px">
 
-退出
+当前咨询师：
+
+<span id="consultantName">
+
+涂老师
+
+</span>
+
+</div>
+
+
+</div>
+
+
+
+<button class="logout" onclick="logout()">
+
+退出登录
 
 </button>
 
@@ -234,15 +310,10 @@ color:#999;
 </div>
 
 
-</div>
 
 
 
-
-
-<div class="container">
-
-
+<!-- 我的预约 -->
 
 <div class="card">
 
@@ -255,7 +326,7 @@ color:#999;
 
 
 
-<button class="refresh" onclick="load()">
+<button onclick="loadBookings()">
 
 刷新预约
 
@@ -305,12 +376,21 @@ color:#999;
 </thead>
 
 
+<tbody id="bookingList">
 
-<tbody id="list">
+
+<tr>
+
+<td colspan="6">
+
+正在加载...
+
+</td>
+
+</tr>
 
 
 </tbody>
-
 
 
 </table>
@@ -320,6 +400,225 @@ color:#999;
 </div>
 
 
+
+
+
+<!-- 咨询记录填写 -->
+
+
+<div class="card hidden" id="recordBox">
+
+
+<h2>
+
+填写咨询记录
+
+</h2>
+
+
+
+<input 
+type="hidden"
+id="appointmentId">
+
+
+
+
+
+<div class="form-row">
+
+
+<label>
+
+咨询标题
+
+</label>
+
+
+<input
+
+id="recordTitle"
+
+placeholder="例如：首次心理咨询">
+
+</div>
+
+
+
+
+
+<div class="form-row">
+
+
+<label>
+
+咨询内容
+
+</label>
+
+
+<textarea
+
+id="recordContent"
+
+placeholder="请输入本次咨询情况">
+
+</textarea>
+
+
+</div>
+
+
+
+
+
+<div class="form-row">
+
+
+<label>
+
+客户情绪状态
+
+</label>
+
+
+<select id="recordMood">
+
+
+<option>
+
+平稳
+
+</option>
+
+
+<option>
+
+焦虑
+
+</option>
+
+
+<option>
+
+压力较大
+
+</option>
+
+
+<option>
+
+情绪低落
+
+</option>
+
+
+<option>
+
+其他
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+<div class="form-row">
+
+
+<label>
+
+风险等级
+
+</label>
+
+
+<select id="riskLevel">
+
+
+<option>
+
+低
+
+</option>
+
+
+<option>
+
+中
+
+</option>
+
+
+<option>
+
+高
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+<div class="form-row">
+
+
+<label>
+
+后续计划
+
+</label>
+
+
+<textarea
+
+id="nextPlan"
+
+placeholder="例如：一周后继续咨询">
+
+</textarea>
+
+
+</div>
+
+
+
+
+<button onclick="saveRecord()">
+
+保存咨询记录
+
+</button>
+
+
+
+<div id="saveResult">
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- 历史咨询记录 -->
 
 
 <div class="card">
@@ -332,11 +631,14 @@ color:#999;
 </h2>
 
 
-<p>
 
-点击预约后的“查看记录”，后续进入咨询记录管理。
+<div id="recordList">
 
-</p>
+
+暂无记录
+
+</div>
+
 
 
 </div>
@@ -344,211 +646,85 @@ color:#999;
 
 
 </div>
-
-
-
-
-
 
 <script>
 
 
+// ======================================
+// 当前咨询师
+// ======================================
 
-const consultant =
 
-JSON.parse(
-
-localStorage.getItem("consultant")
-
-);
+let consultantName = "涂老师";
 
 
 
-if(!consultant){
+// 当前预约ID
 
-
-location.href="/consultant-login";
-
-
-}
+let currentAppointmentId = null;
 
 
 
 
-document
-.getElementById("consultantName")
-.innerHTML=
-
-"欢迎："+
-
-(consultant.name || consultant.username);
+// ======================================
+// 页面初始化
+// ======================================
 
 
+window.onload = function(){
 
 
+    loadBookings();
+
+    loadRecords();
 
 
-
-async function load(){
-
-
-
-const list =
-
-document.getElementById("list");
+};
 
 
 
-list.innerHTML=
 
-`
-
-<tr>
-
-<td colspan="6">
-
-加载中...
-
-</td>
-
-</tr>
-
-`;
+// ======================================
+// 获取预约
+// /api/consultant-bookings
+// ======================================
 
 
-
+async function loadBookings(){
 
 
 try{
 
 
-
-const res =
-
-await fetch(
+const res = await fetch(
 
 "/api/consultant-bookings?name="
-
 +
-
-encodeURIComponent(
-
-consultant.name
-
-)
+encodeURIComponent(consultantName)
 
 );
 
 
 
-const data =
-
-await res.json();
+const data = await res.json();
 
 
 
-
-list.innerHTML="";
-
-
-
-
-if(
-
-data.success &&
-
-data.data.length
-
-){
+const list =
+document.getElementById(
+"bookingList"
+);
 
 
 
-data.data.forEach(item=>{
+if(!data.success || data.data.length===0){
 
 
-list.innerHTML +=
-
-`
+list.innerHTML = `
 
 <tr>
 
-
-<td>
-
-${item.name || "匿名客户"}
-
-</td>
-
-
-
-<td>
-
-${item.phone || ""}
-
-</td>
-
-
-
-<td>
-
-${item.type || ""}
-
-</td>
-
-
-
-<td>
-
-${item.appointment_time || ""}
-
-</td>
-
-
-
-<td>
-
-${item.status || "待处理"}
-
-</td>
-
-
-
-<td>
-
-
-<button class="action"
-
-onclick="viewRecord(${item.id})">
-
-查看记录
-
-</button>
-
-
-</td>
-
-
-
-</tr>
-
-`;
-
-
-
-});
-
-
-
-}else{
-
-
-list.innerHTML=
-
-`
-
-<tr>
-
-<td colspan="6" class="empty">
+<td colspan="6">
 
 暂无预约
 
@@ -559,25 +735,96 @@ list.innerHTML=
 `;
 
 
+return;
+
 
 }
 
 
 
 
+
+list.innerHTML="";
+
+
+
+data.data.forEach(item=>{
+
+
+let tr=document.createElement("tr");
+
+
+
+tr.innerHTML=`
+
+<td>
+${item.name || "-"}
+</td>
+
+
+<td>
+${item.phone || "-"}
+</td>
+
+
+<td>
+${item.type || "-"}
+</td>
+
+
+<td>
+${item.appointment_time || "-"}
+</td>
+
+
+<td>
+${item.status || "待处理"}
+</td>
+
+
+<td>
+
+
+<button
+
+onclick="openRecord(${item.id})">
+
+填写记录
+
+</button>
+
+
+</td>
+
+`;
+
+
+
+list.appendChild(tr);
+
+
+
+});
+
+
+
 }catch(e){
 
 
+console.log(e);
 
-list.innerHTML=
 
-`
+document.getElementById(
+
+"bookingList"
+
+).innerHTML=`
 
 <tr>
 
 <td colspan="6">
 
-加载失败，请刷新
+加载失败
 
 </td>
 
@@ -598,15 +845,43 @@ list.innerHTML=
 
 
 
+// ======================================
+// 打开填写记录
+// ======================================
 
-function viewRecord(id){
+
+function openRecord(id){
 
 
-alert(
+currentAppointmentId=id;
 
-"咨询记录功能即将开放，预约ID："+id
 
+
+document.getElementById(
+"appointmentId"
+).value=id;
+
+
+
+document.getElementById(
+"recordBox"
+).classList.remove(
+"hidden"
 );
+
+
+
+window.scrollTo({
+
+top:
+document.getElementById(
+"recordBox"
+).offsetTop,
+
+behavior:"smooth"
+
+});
+
 
 
 }
@@ -616,19 +891,380 @@ alert(
 
 
 
-function logout(){
+
+// ======================================
+// 保存咨询记录
+// POST /api/save-record
+// ======================================
+
+
+async function saveRecord(){
 
 
 
-localStorage.removeItem(
+const result =
+document.getElementById(
+"saveResult"
+);
 
-"consultant"
+
+
+result.innerHTML=
+"正在保存...";
+
+
+
+
+
+try{
+
+
+const res =
+await fetch(
+
+"/api/save-record",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":
+
+"application/json"
+
+
+},
+
+
+body:JSON.stringify({
+
+appointment_id:
+
+currentAppointmentId,
+
+
+consultant:
+
+consultantName,
+
+
+title:
+
+document.getElementById(
+"recordTitle"
+).value,
+
+
+content:
+
+document.getElementById(
+"recordContent"
+).value,
+
+
+mood:
+
+document.getElementById(
+"recordMood"
+).value,
+
+
+risk_level:
+
+document.getElementById(
+"riskLevel"
+).value,
+
+
+next_plan:
+
+document.getElementById(
+"nextPlan"
+).value
+
+
+})
+
+
+}
 
 );
 
 
 
-location.href=
+
+const data =
+await res.json();
+
+
+
+
+
+if(data.success){
+
+
+
+result.className="success";
+
+
+result.innerHTML=
+
+"✅ 咨询记录保存成功";
+
+
+
+// 清空
+
+document.getElementById(
+"recordTitle"
+).value="";
+
+
+document.getElementById(
+"recordContent"
+).value="";
+
+
+document.getElementById(
+"nextPlan"
+).value="";
+
+
+
+// 刷新记录
+
+loadRecords();
+
+
+
+}
+
+else{
+
+
+result.className="error";
+
+
+result.innerHTML=
+
+"保存失败："+data.message;
+
+
+}
+
+
+
+}catch(e){
+
+
+result.className="error";
+
+
+result.innerHTML=
+
+"网络错误";
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+// ======================================
+// 加载历史咨询记录
+// GET /api/records
+// ======================================
+
+
+async function loadRecords(){
+
+
+try{
+
+
+const res =
+await fetch(
+
+"/api/records?consultant="
+
++
+encodeURIComponent(
+consultantName
+)
+
+);
+
+
+
+const data =
+await res.json();
+
+
+
+const box =
+document.getElementById(
+"recordList"
+);
+
+
+
+if(
+!data.success ||
+data.data.length===0
+){
+
+
+box.innerHTML=
+
+"暂无咨询记录";
+
+
+return;
+
+
+}
+
+
+
+
+box.innerHTML="";
+
+
+
+data.data.forEach(record=>{
+
+
+let div =
+document.createElement(
+"div"
+);
+
+
+div.className="record";
+
+
+
+div.innerHTML=
+
+`
+
+<h3>
+
+${record.title || "咨询记录"}
+
+</h3>
+
+
+<p>
+
+<b>咨询师：</b>
+
+${record.consultant}
+
+</p>
+
+
+<p>
+
+<b>咨询内容：</b>
+
+${record.content}
+
+</p>
+
+
+<p>
+
+<b>情绪：</b>
+
+${record.mood}
+
+</p>
+
+
+<p>
+
+<b>风险等级：</b>
+
+${record.risk_level}
+
+</p>
+
+
+<p>
+
+<b>后续计划：</b>
+
+${record.next_plan}
+
+</p>
+
+
+<p>
+
+时间：
+
+${record.created_at}
+
+</p>
+
+`;
+
+
+
+box.appendChild(div);
+
+
+
+});
+
+
+
+
+}catch(e){
+
+
+console.log(e);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+// ======================================
+// 退出登录
+// ======================================
+
+
+function logout(){
+
+
+localStorage.removeItem(
+"consultant"
+);
+
+
+
+window.location.href=
 
 "/consultant-login";
 
@@ -637,15 +1273,7 @@ location.href=
 
 
 
-
-
-load();
-
-
-
 </script>
-
-
 
 
 </body>
