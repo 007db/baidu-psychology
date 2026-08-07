@@ -1,12 +1,168 @@
 <!doctype html>
-<html><body>
-<h1>摆渡心理管理后台</h1>
-<button onclick="load()">查看预约</button>
-<pre id="data"></pre>
-<script>
-async function load(){
-let r=await fetch('/api/admin');
-data.textContent=await r.text();
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>摆渡心理管理后台</title>
+
+
+<style>
+
+body{
+
+font-family:"Microsoft YaHei";
+
+background:#f5f9ff;
+
+padding:20px;
+
 }
+
+
+h1{
+
+color:#0077c8;
+
+text-align:center;
+
+}
+
+
+table{
+
+width:100%;
+
+background:white;
+
+border-collapse:collapse;
+
+}
+
+
+th,td{
+
+padding:12px;
+
+border:1px solid #ddd;
+
+text-align:center;
+
+}
+
+
+th{
+
+background:#0077c8;
+
+color:white;
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<h1>
+摆渡心理 管理后台
+</h1>
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>姓名</th>
+
+<th>电话</th>
+
+<th>类型</th>
+
+<th>预约时间</th>
+
+<th>留言</th>
+
+</tr>
+
+
+</thead>
+
+
+<tbody id="list">
+
+
+</tbody>
+
+
+</table>
+
+
+
+<script>
+
+
+async function load(){
+
+
+const res =
+await fetch("/api/admin");
+
+
+const data =
+await res.json();
+
+
+
+const list =
+document.getElementById("list");
+
+
+
+data.data.forEach(item=>{
+
+
+list.innerHTML += `
+
+<tr>
+
+<td>${item.name||""}</td>
+
+<td>${item.phone||""}</td>
+
+<td>${item.type||""}</td>
+
+<td>${item.appointment_time||""}</td>
+
+<td>${item.message||""}</td>
+
+</tr>
+
+`;
+
+
+});
+
+
+}
+
+
+load();
+
+
 </script>
-</body></html>
+
+
+</body>
+
+</html>
