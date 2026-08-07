@@ -1,41 +1,11 @@
-# baidu-psychology-v9.0-final
+# baidu-psychology-v9.0-admin-d1-api
 
-Cloudflare Pages 企业心理服务平台。
+Cloudflare Pages Functions + D1 管理后台数据接入包。
 
-## 技术架构
+包含：
+- admin.html
+- admin.js
+- clients API
 
-- HTML/CSS/JavaScript
-- Cloudflare Pages
-- Pages Functions
-- Cloudflare D1
-- JWT认证
-- DeepSeek AI接口
-
-## 目录
-
-public/
-  网站前端
-
-functions/
-  API接口
-
-database/
-  D1 SQL
-
-## 部署
-
-1. 上传 GitHub
-2. Cloudflare Pages 连接仓库
-3.
-
-Build output directory:
-
-public
-
-4. 绑定 D1 数据库
-
-完成部署。
-
-## 当前版本
-
-baidu-psychology-v9.0-final
+D1 Binding:
+DB
