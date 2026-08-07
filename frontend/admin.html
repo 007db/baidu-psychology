@@ -14,20 +14,72 @@
 
 body{
 
+margin:0;
+
+background:#f3f9ff;
+
 font-family:"Microsoft YaHei";
 
-background:#f5f9ff;
+}
+
+
+.header{
+
+background:#0077c8;
+
+color:white;
+
+padding:20px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+
+.container{
 
 padding:20px;
 
 }
 
 
-h1{
+.card{
 
-color:#0077c8;
+background:white;
+
+padding:20px;
+
+border-radius:15px;
+
+margin-bottom:20px;
+
+box-shadow:0 5px 20px #ddd;
+
+}
+
+
+.stats{
+
+display:flex;
+
+gap:20px;
+
+}
+
+
+.stat{
+
+flex:1;
 
 text-align:center;
+
+font-size:20px;
+
+color:#0077c8;
 
 }
 
@@ -36,20 +88,9 @@ table{
 
 width:100%;
 
-background:white;
-
 border-collapse:collapse;
 
-}
-
-
-th,td{
-
-padding:12px;
-
-border:1px solid #ddd;
-
-text-align:center;
+background:white;
 
 }
 
@@ -62,6 +103,49 @@ color:white;
 
 }
 
+
+td,th{
+
+padding:12px;
+
+border:1px solid #ddd;
+
+text-align:center;
+
+}
+
+
+button{
+
+padding:8px 12px;
+
+border:0;
+
+border-radius:6px;
+
+cursor:pointer;
+
+}
+
+
+.edit{
+
+background:#0077c8;
+
+color:white;
+
+}
+
+
+.del{
+
+background:#e53935;
+
+color:white;
+
+}
+
+
 </style>
 
 
@@ -71,9 +155,70 @@ color:white;
 <body>
 
 
-<h1>
-摆渡心理 管理后台
-</h1>
+<div class="header">
+
+<div>
+摆渡心理管理中心
+</div>
+
+
+<div>
+
+管理员：
+
+<span id="user"></span>
+
+<button onclick="logout()">
+退出
+</button>
+
+</div>
+
+</div>
+
+
+<div class="container">
+
+
+<div class="stats">
+
+
+<div class="card stat">
+
+今日预约
+
+<br>
+
+<span id="count">
+0
+</span>
+
+</div>
+
+
+<div class="card stat">
+
+全部预约
+
+<br>
+
+<span id="total">
+0
+</span>
+
+</div>
+
+
+</div>
+
+
+
+<div class="card">
+
+
+<h2>
+预约列表
+</h2>
 
 
 <table>
@@ -87,20 +232,24 @@ color:white;
 
 <th>电话</th>
 
+<th>微信</th>
+
 <th>类型</th>
 
-<th>预约时间</th>
+<th>时间</th>
 
 <th>留言</th>
 
-</tr>
+<th>状态</th>
 
+<th>操作</th>
+
+</tr>
 
 </thead>
 
 
 <tbody id="list">
-
 
 </tbody>
 
@@ -108,8 +257,34 @@ color:white;
 </table>
 
 
+</div>
+
+
+</div>
+
+
 
 <script>
+
+
+const admin =
+JSON.parse(
+localStorage.getItem("admin")
+);
+
+
+
+if(!admin){
+
+location.href="/admin-login";
+
+}
+
+
+document.getElementById("user")
+.innerHTML=
+admin.username;
+
 
 
 async function load(){
@@ -123,16 +298,17 @@ const data =
 await res.json();
 
 
-
 const list =
 document.getElementById("list");
 
+
+list.innerHTML="";
 
 
 data.data.forEach(item=>{
 
 
-list.innerHTML += `
+list.innerHTML +=`
 
 <tr>
 
@@ -140,11 +316,45 @@ list.innerHTML += `
 
 <td>${item.phone||""}</td>
 
+<td>${item.wechat||""}</td>
+
 <td>${item.type||""}</td>
 
 <td>${item.appointment_time||""}</td>
 
 <td>${item.message||""}</td>
+
+
+<td>
+
+${item.status||"待处理"}
+
+</td>
+
+
+<td>
+
+
+<button class="edit"
+
+onclick="finish(${item.id})">
+
+完成
+
+</button>
+
+
+<button class="del"
+
+onclick="removeItem(${item.id})">
+
+删除
+
+</button>
+
+
+</td>
+
 
 </tr>
 
@@ -152,6 +362,87 @@ list.innerHTML += `
 
 
 });
+
+
+
+document.getElementById("total")
+.innerHTML=data.data.length;
+
+
+}
+
+
+
+async function finish(id){
+
+
+await fetch(
+"/api/update-status",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+id:id,
+
+status:"已完成"
+
+})
+
+});
+
+
+load();
+
+
+}
+
+
+
+async function removeItem(id){
+
+
+if(!confirm("确定删除？"))
+return;
+
+
+await fetch(
+"/api/delete-booking",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+id:id
+
+})
+
+});
+
+
+load();
+
+
+}
+
+
+
+function logout(){
+
+
+localStorage.removeItem("admin");
+
+location.href="/admin-login";
 
 
 }
