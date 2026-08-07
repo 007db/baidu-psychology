@@ -1,23 +1,50 @@
+async function api(url){
+const r=await fetch(url);
+return await r.json();
+}
+
 async function load(){
 
-let s=await fetch('/api/admin').then(r=>r.json());
-document.getElementById('stats').innerHTML =
-JSON.stringify(s.statistics);
+const admin=await api('/api/admin');
 
-let a=await fetch('/api/appointments').then(r=>r.json());
-appointmentList.innerHTML=a.data.map(x =>
-`<tr><td>${x.id}</td><td>${x.name}</td><td>${x.status}</td></tr>`
-).join('');
+if(admin.success){
+statistics.innerHTML=`
+<div class="card">用户 ${admin.statistics.users}</div>
+<div class="card">咨询师 ${admin.statistics.consultants}</div>
+<div class="card">预约 ${admin.statistics.appointments}</div>
+<div class="card">记录 ${admin.statistics.records}</div>`;
+}
 
-let c=await fetch('/api/clients').then(r=>r.json());
-clientList.innerHTML=c.data.map(x =>
-`<tr><td>${x.id}</td><td>${x.name}</td><td>${x.phone||''}</td></tr>`
-).join('');
 
-let r=await fetch('/api/records').then(r=>r.json());
-recordList.innerHTML=r.data.map(x =>
-`<tr><td>${x.id}</td><td>${x.title}</td></tr>`
-).join('');
+const appointments=await api('/api/appointments');
+appointmentList.innerHTML=(appointments.data||[]).map(x=>`
+<tr>
+<td>${x.id}</td>
+<td>${x.name||''}</td>
+<td>${x.consultant||''}</td>
+<td>${x.appointment_time||''}</td>
+<td>${x.status||''}</td>
+</tr>`).join('');
+
+
+const clients=await api('/api/clients');
+clientList.innerHTML=(clients.data||[]).map(x=>`
+<tr>
+<td>${x.id}</td>
+<td>${x.name||''}</td>
+<td>${x.phone||''}</td>
+<td>${x.occupation||''}</td>
+</tr>`).join('');
+
+
+const records=await api('/api/records');
+recordList.innerHTML=(records.data||[]).map(x=>`
+<tr>
+<td>${x.id}</td>
+<td>${x.title||''}</td>
+<td>${x.content||''}</td>
+</tr>`).join('');
 
 }
+
 load();

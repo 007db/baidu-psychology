@@ -3,19 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <title>摆渡心理 V9.0 管理后台</title>
+<style>
+body{font-family:Arial;background:#f5f7fb;padding:20px}
+.card{display:inline-block;background:white;padding:20px;margin:8px;border-radius:10px}
+table{width:100%;background:white;border-collapse:collapse;margin-bottom:30px}
+td,th{padding:10px;border:1px solid #ddd}
+</style>
 </head>
 <body>
+
 <h1>🧠 摆渡心理 V9.0 管理后台</h1>
-<div id="stats"></div>
 
-<h2>预约管理</h2>
-<table border="1"><tbody id="appointmentList"></tbody></table>
+<div id="statistics"></div>
 
-<h2>客户档案</h2>
-<table border="1"><tbody id="clientList"></tbody></table>
+<h2>📅 预约管理</h2>
+<table>
+<thead>
+<tr><th>ID</th><th>客户</th><th>咨询师</th><th>时间</th><th>状态</th></tr>
+</thead>
+<tbody id="appointmentList"></tbody>
+</table>
 
-<h2>咨询记录</h2>
-<table border="1"><tbody id="recordList"></tbody></table>
+<h2>👥 客户档案</h2>
+<table>
+<thead>
+<tr><th>ID</th><th>姓名</th><th>电话</th><th>职业</th></tr>
+</thead>
+<tbody id="clientList"></tbody>
+</table>
+
+<h2>📝 咨询记录</h2>
+<table>
+<thead>
+<tr><th>ID</th><th>标题</th><th>内容</th></tr>
+</thead>
+<tbody id="recordList"></tbody>
+</table>
 
 <script src="admin.js"></script>
 </body>

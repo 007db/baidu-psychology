@@ -1,7 +1,7 @@
 export async function onRequestGet({env}){
 
 const result=await env.DB.prepare(
-"SELECT * FROM clients ORDER BY id DESC"
+"SELECT * FROM records ORDER BY id DESC"
 ).all();
 
 return Response.json({
