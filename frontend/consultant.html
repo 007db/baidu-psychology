@@ -12,15 +12,19 @@
 
 <style>
 
+
 body{
 
 margin:0;
 
+font-family:
+"Microsoft YaHei",
+Arial;
+
 background:#f3f9ff;
 
-font-family:"Microsoft YaHei";
-
 }
+
 
 
 .header{
@@ -35,14 +39,52 @@ display:flex;
 
 justify-content:space-between;
 
+align-items:center;
+
 }
+
+
+
+.header h1{
+
+margin:0;
+
+font-size:22px;
+
+}
+
+
+
+.header button{
+
+background:white;
+
+color:#0077c8;
+
+border:none;
+
+padding:8px 15px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+}
+
+
 
 
 .container{
 
 padding:20px;
 
+max-width:1100px;
+
+margin:auto;
+
 }
+
+
 
 
 .card{
@@ -53,11 +95,21 @@ padding:20px;
 
 border-radius:15px;
 
+box-shadow:
+0 5px 20px rgba(0,0,0,.1);
+
 margin-bottom:20px;
 
-box-shadow:0 5px 20px #ddd;
+}
+
+
+
+h2{
+
+color:#0077c8;
 
 }
+
 
 
 
@@ -68,6 +120,7 @@ width:100%;
 border-collapse:collapse;
 
 }
+
 
 
 th{
@@ -81,6 +134,7 @@ padding:12px;
 }
 
 
+
 td{
 
 padding:12px;
@@ -92,13 +146,22 @@ text-align:center;
 }
 
 
+
 button{
+
+cursor:pointer;
+
+}
+
+
+
+.action{
 
 background:#0077c8;
 
 color:white;
 
-border:0;
+border:none;
 
 padding:8px 15px;
 
@@ -107,45 +170,97 @@ border-radius:6px;
 }
 
 
+
+.refresh{
+
+background:#00a67d;
+
+color:white;
+
+border:none;
+
+padding:10px 20px;
+
+border-radius:8px;
+
+margin-bottom:15px;
+
+}
+
+
+
+.empty{
+
+text-align:center;
+
+color:#999;
+
+}
+
+
+
 </style>
 
 
 </head>
 
 
+
 <body>
+
 
 
 <div class="header">
 
-<div>
+
+<h1>
 摆渡心理咨询师工作台
-</div>
+</h1>
 
 
 <div>
 
-<span id="name"></span>
+
+<span id="consultantName"></span>
+
 
 <button onclick="logout()">
+
 退出
+
 </button>
 
+
 </div>
 
 
 </div>
+
+
 
 
 
 <div class="container">
 
 
+
 <div class="card">
 
+
 <h2>
+
 我的预约
+
 </h2>
+
+
+
+<button class="refresh" onclick="load()">
+
+刷新预约
+
+</button>
+
 
 
 <table>
@@ -159,49 +274,67 @@ border-radius:6px;
 客户
 </th>
 
+
 <th>
 电话
 </th>
 
-<th>
-类型
-</th>
 
 <th>
-时间
+咨询类型
 </th>
+
+
+<th>
+预约时间
+</th>
+
 
 <th>
 状态
 </th>
+
+
+<th>
+操作
+</th>
+
 
 </tr>
 
 </thead>
 
 
+
 <tbody id="list">
+
 
 </tbody>
 
 
+
 </table>
+
 
 
 </div>
 
 
 
+
 <div class="card">
 
+
 <h2>
+
 咨询记录
+
 </h2>
 
 
 <p>
 
-后续添加咨询记录功能
+点击预约后的“查看记录”，后续进入咨询记录管理。
 
 </p>
 
@@ -214,7 +347,11 @@ border-radius:6px;
 
 
 
+
+
+
 <script>
+
 
 
 const consultant =
@@ -229,43 +366,85 @@ localStorage.getItem("consultant")
 
 if(!consultant){
 
+
 location.href="/consultant-login";
+
 
 }
 
 
 
+
 document
-.getElementById("name")
+.getElementById("consultantName")
 .innerHTML=
 
-consultant.name;
+"欢迎："+
+
+(consultant.name || consultant.username);
+
+
+
+
 
 
 
 async function load(){
 
 
-const res=
+
+const list =
+
+document.getElementById("list");
+
+
+
+list.innerHTML=
+
+`
+
+<tr>
+
+<td colspan="6">
+
+加载中...
+
+</td>
+
+</tr>
+
+`;
+
+
+
+
+
+try{
+
+
+
+const res =
 
 await fetch(
 
-"/api/consultant-bookings?name="+
-encodeURIComponent(consultant.name)
+"/api/consultant-bookings?name="
+
++
+
+encodeURIComponent(
+
+consultant.name
+
+)
 
 );
 
 
 
-const data=
+const data =
 
 await res.json();
 
-
-
-const list=
-
-document.getElementById("list");
 
 
 
@@ -273,58 +452,200 @@ list.innerHTML="";
 
 
 
-if(data.success){
+
+if(
+
+data.success &&
+
+data.data.length
+
+){
+
 
 
 data.data.forEach(item=>{
 
 
-list.innerHTML+=`
+list.innerHTML +=
+
+`
 
 <tr>
 
-<td>${item.name}</td>
 
-<td>${item.phone}</td>
+<td>
 
-<td>${item.type}</td>
+${item.name || "匿名客户"}
 
-<td>${item.appointment_time}</td>
+</td>
 
-<td>${item.status}</td>
+
+
+<td>
+
+${item.phone || ""}
+
+</td>
+
+
+
+<td>
+
+${item.type || ""}
+
+</td>
+
+
+
+<td>
+
+${item.appointment_time || ""}
+
+</td>
+
+
+
+<td>
+
+${item.status || "待处理"}
+
+</td>
+
+
+
+<td>
+
+
+<button class="action"
+
+onclick="viewRecord(${item.id})">
+
+查看记录
+
+</button>
+
+
+</td>
+
+
 
 </tr>
 
 `;
 
 
+
 });
 
 
+
+}else{
+
+
+list.innerHTML=
+
+`
+
+<tr>
+
+<td colspan="6" class="empty">
+
+暂无预约
+
+</td>
+
+</tr>
+
+`;
+
+
+
+}
+
+
+
+
+}catch(e){
+
+
+
+list.innerHTML=
+
+`
+
+<tr>
+
+<td colspan="6">
+
+加载失败，请刷新
+
+</td>
+
+</tr>
+
+`;
+
+
+
 }
 
 
 
 }
+
+
+
+
+
+
+
+function viewRecord(id){
+
+
+alert(
+
+"咨询记录功能即将开放，预约ID："+id
+
+);
+
+
+}
+
+
+
 
 
 
 function logout(){
 
 
-localStorage.removeItem("consultant");
 
-location.href="/consultant-login";
+localStorage.removeItem(
+
+"consultant"
+
+);
+
+
+
+location.href=
+
+"/consultant-login";
 
 
 }
 
 
 
+
+
 load();
 
 
+
 </script>
+
+
 
 
 </body>
