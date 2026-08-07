@@ -1,11 +1,17 @@
-# baidu-psychology-v9.0-final-part3-database
+# baidu-psychology-v9.0-final-part4-admin-consultant
 
-Cloudflare D1 Database SQL
+后台模块：
 
-包含:
-- schema.sql
-- seed.sql
-- upgrade-v9.sql
+## 管理员
+- Dashboard
+- 预约管理
+- 咨询记录
+- 客户档案
+- 数据统计
 
-部署:
-wrangler d1 execute DATABASE_NAME --file database/schema.sql
+## 咨询师
+- 工作台
+- 我的客户
+- 咨询记录
+
+适配 Cloudflare Pages + Functions + JWT。
