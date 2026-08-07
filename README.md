@@ -1,10 +1,11 @@
-# baidu-psychology-v9.0-final-part2-functions
+# baidu-psychology-v9.0-final-part3-database
 
-Cloudflare Pages Functions API 模块。
+Cloudflare D1 Database SQL
 
 包含:
-- JWT认证
-- DeepSeek AI接口
-- 在线预约API
-- 咨询记录API
-- 管理权限API
+- schema.sql
+- seed.sql
+- upgrade-v9.sql
+
+部署:
+wrangler d1 execute DATABASE_NAME --file database/schema.sql
