@@ -1,18 +1,18 @@
-# baidu-psychology-v9.0-admin-final
+# baidu-psychology-v9.0-admin-enterprise
 
-摆渡心理 V9.0 管理后台最终接入包
+企业后台升级版
 
 功能：
-- JWT登录接口基础版
-- 管理统计API
-- 预约管理API
-- 客户档案API
-- 咨询记录API
-- admin.html真实读取D1
+- 登录入口 login.html
+- JWT接口基础结构
+- 管理员/咨询师权限扩展入口
+- 数据统计
+- 预约管理
+- 客户档案
+- 咨询记录
 
 Cloudflare Pages:
-Functions目录自动部署
+Functions自动部署
 
 D1 Binding:
-Variable name:
 DB
