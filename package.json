@@ -1,0 +1,8 @@
+{
+  "name": "baidu-psychology-v9",
+  "version": "9.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler pages deploy public"
+  }
+}

@@ -1,0 +1,7 @@
+name = "baidu-psychology-v9"
+compatibility_date = "2026-08-07"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "baidu-psychology-db"
+database_id = "YOUR_D1_DATABASE_ID"
