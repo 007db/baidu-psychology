@@ -1,9 +1,14 @@
-export async function onRequestPost({request, env}) {
+export async function onRequestPost({ request, env }) {
+
+try {
+
 
 const data = await request.json();
 
 
-await env.DB.prepare(
+
+const result = await env.DB.prepare(
+
 `
 INSERT INTO appointments
 (
@@ -13,18 +18,21 @@ wechat,
 type,
 date,
 time,
-message
+message,
+status
 )
 
 VALUES
-(?,?,?,?,?,?,?)
+(?,?,?,?,?,?,?,'待处理')
+
 `
+
 )
 .bind(
 
-data.name,
+data.name || "",
 
-data.phone,
+data.phone || "",
 
 data.wechat || "",
 
@@ -37,15 +45,43 @@ data.time || "",
 data.message || ""
 
 )
+
 .run();
+
 
 
 return Response.json({
 
 success:true,
 
+id:result.meta.last_row_id,
+
 message:"预约提交成功"
 
 });
+
+
+
+}
+catch(error){
+
+
+return Response.json({
+
+success:false,
+
+error:error.message
+
+},
+
+{
+
+status:500
+
+});
+
+
+}
+
 
 }
