@@ -1,165 +1,126 @@
 export async function onRequestPost(context) {
-
   try {
-
     const { request, env } = context;
 
-
-    // 检查 DeepSeek Key 是否存在
-    console.log(
-      "DeepSeek Key 是否存在:",
-      !!env.DEEPSEEK_API_KEY
-    );
-
-
+    // =========================
+    // 1. 检查 DeepSeek API Key
+    // =========================
     if (!env.DEEPSEEK_API_KEY) {
-
-      return new Response(
-        JSON.stringify({
-          error: "DEEPSEEK_API_KEY 未配置"
-        }),
+      return Response.json(
         {
-          status: 500,
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
+          success: false,
+          error: "DEEPSEEK_API_KEY 未配置"
+        },
+        { status: 500 }
       );
-
     }
 
-
-    const { message } = await request.json();
-
+    // =========================
+    // 2. 获取用户消息
+    // =========================
+    const body = await request.json();
+    const message = body?.message?.trim();
 
     if (!message) {
-
-      return new Response(
-        JSON.stringify({
-          error: "请输入咨询内容"
-        }),
+      return Response.json(
         {
-          status: 400,
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
+          success: false,
+          error: "请输入咨询内容"
+        },
+        { status: 400 }
       );
-
     }
 
-
-
+    // =========================
+    // 3. 调用 DeepSeek
+    // =========================
     const response = await fetch(
       "https://api.deepseek.com/chat/completions",
       {
-
         method: "POST",
 
         headers: {
-
-          "Authorization":
-            `Bearer ${env.DEEPSEEK_API_KEY}`,
-
-          "Content-Type":
-            "application/json"
-
+          "Authorization": `Bearer ${env.DEEPSEEK_API_KEY}`,
+          "Content-Type": "application/json"
         },
 
-
         body: JSON.stringify({
-
           model: "deepseek-chat",
 
-
           messages: [
-
             {
               role: "system",
-
               content:
-              "你是摆渡心理AI助手，为用户提供温和、专业、安全的心理支持。不要进行医疗诊断，不替代专业心理咨询。遇到危机风险时，建议用户寻求专业帮助。"
+                "你是摆渡心理AI助手，为用户提供温和、专业、安全的心理支持。不要进行医疗诊断，不替代专业心理咨询。遇到明显危机风险时，应建议用户及时寻求专业帮助。"
             },
-
 
             {
               role: "user",
-
               content: message
-
             }
-
           ],
 
-
           temperature: 0.7
-
         })
-
-      }
-
-    );
-
-
-
-    const result = await response.text();
-
-
-
-    return new Response(
-      result,
-      {
-
-        status: response.status,
-
-        headers: {
-
-          "Content-Type":
-          "application/json"
-
-        }
-
       }
     );
 
+    // =========================
+    // 4. 读取 DeepSeek 返回
+    // =========================
+    const result = await response.json();
 
+    // DeepSeek API 返回错误
+    if (!response.ok) {
+      console.error("DeepSeek API错误:", result);
+
+      return Response.json(
+        {
+          success: false,
+          error:
+            result?.error?.message ||
+            `DeepSeek API 请求失败，HTTP ${response.status}`
+        },
+        { status: response.status }
+      );
+    }
+
+    // =========================
+    // 5. 提取 AI 回复
+    // =========================
+    const reply =
+      result?.choices?.[0]?.message?.content || "";
+
+    if (!reply) {
+      console.error("DeepSeek没有返回AI内容:", result);
+
+      return Response.json(
+        {
+          success: false,
+          error: "DeepSeek没有返回AI回复"
+        },
+        { status: 500 }
+      );
+    }
+
+    // =========================
+    // 6. 返回统一格式
+    // =========================
+    return Response.json({
+      success: true,
+      reply: reply
+    });
 
   } catch (error) {
 
+    console.error("AI接口错误:", error);
 
-    console.error(
-      "AI接口错误:",
-      error
-    );
-
-
-    return new Response(
-
-      JSON.stringify({
-
-        error:
-        "AI服务暂时异常",
-
-        detail:
-        error.message
-
-      }),
-
+    return Response.json(
       {
-
-        status: 500,
-
-        headers: {
-
-          "Content-Type":
-          "application/json"
-
-        }
-
-      }
-
+        success: false,
+        error: error?.message || "AI服务暂时异常"
+      },
+      { status: 500 }
     );
-
   }
-
 }
