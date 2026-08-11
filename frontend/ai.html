@@ -9,211 +9,171 @@
 
 <title>摆渡心理 AI助手</title>
 
-
 <style>
 
 body{
-
-margin:0;
-
-font-family:
-"Microsoft YaHei",
-Arial,
-sans-serif;
-
-background:#f3f9ff;
-
+    margin:0;
+    font-family:"Microsoft YaHei",Arial,sans-serif;
+    background:#f3f9ff;
 }
-
 
 .container{
-
-max-width:700px;
-
-margin:30px auto;
-
-padding:20px;
-
+    max-width:700px;
+    margin:30px auto;
+    padding:20px;
 }
-
 
 .logo-title{
-
-text-align:center;
-
-color:#0077c8;
-
-font-size:28px;
-
-font-weight:bold;
-
+    text-align:center;
+    color:#0077c8;
+    font-size:28px;
+    font-weight:bold;
 }
-
 
 .subtitle{
-
-text-align:center;
-
-color:#555;
-
-margin-bottom:20px;
-
+    text-align:center;
+    color:#555;
+    margin-bottom:20px;
 }
-
-
 
 .chat-box{
-
-background:white;
-
-border-radius:15px;
-
-padding:20px;
-
-min-height:350px;
-
-box-shadow:
-0 5px 20px rgba(0,0,0,.08);
-
-overflow:auto;
-
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    min-height:350px;
+    max-height:600px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    overflow-y:auto;
+    box-sizing:border-box;
 }
-
-
 
 .user{
-
-text-align:right;
-
-margin:12px 0;
-
+    text-align:right;
+    margin:12px 0;
 }
-
 
 .user span{
-
-display:inline-block;
-
-background:#0077c8;
-
-color:white;
-
-padding:10px 15px;
-
-border-radius:15px;
-
+    display:inline-block;
+    max-width:80%;
+    background:#0077c8;
+    color:white;
+    padding:10px 15px;
+    border-radius:15px;
+    text-align:left;
+    white-space:pre-wrap;
+    word-break:break-word;
 }
-
-
 
 .ai{
-
-text-align:left;
-
-margin:12px 0;
-
+    text-align:left;
+    margin:12px 0;
 }
-
 
 .ai span{
-
-display:inline-block;
-
-background:#e8f5ff;
-
-color:#333;
-
-padding:10px 15px;
-
-border-radius:15px;
-
+    display:inline-block;
+    max-width:80%;
+    background:#e8f5ff;
+    color:#333;
+    padding:10px 15px;
+    border-radius:15px;
+    text-align:left;
+    white-space:pre-wrap;
+    word-break:break-word;
 }
-
-
 
 .input-area{
-
-display:flex;
-
-margin-top:15px;
-
-gap:10px;
-
+    display:flex;
+    margin-top:15px;
+    gap:10px;
 }
-
 
 textarea{
-
-flex:1;
-
-height:70px;
-
-border-radius:10px;
-
-border:1px solid #ccc;
-
-padding:10px;
-
-font-size:15px;
-
-resize:none;
-
+    flex:1;
+    height:70px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    padding:10px;
+    font-size:15px;
+    resize:none;
+    box-sizing:border-box;
+    font-family:"Microsoft YaHei",Arial,sans-serif;
 }
 
+textarea:focus{
+    outline:none;
+    border-color:#0077c8;
+}
 
 button{
-
-width:90px;
-
-background:#0077c8;
-
-color:white;
-
-border:none;
-
-border-radius:10px;
-
-font-size:16px;
-
-cursor:pointer;
-
+    width:90px;
+    background:#0077c8;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
 }
-
-
 
 button:hover{
-
-background:#005fa3;
-
+    background:#005fa3;
 }
 
-
-
-.hotline{
-
-margin-top:25px;
-
-text-align:center;
-
-font-size:16px;
-
+button:disabled{
+    background:#9bbfd6;
+    cursor:not-allowed;
 }
-
-
-.hotline a{
-
-color:#e53935;
-
-font-weight:bold;
-
-text-decoration:none;
-
-}
-
 
 .loading{
+    color:#999;
+}
 
-color:#999;
+.hotline{
+    margin-top:25px;
+    text-align:center;
+    font-size:16px;
+}
+
+.hotline a{
+    color:#e53935;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.notice{
+    margin-top:15px;
+    text-align:center;
+    color:#888;
+    font-size:13px;
+    line-height:1.6;
+}
+
+@media(max-width:600px){
+
+    .container{
+        margin:10px auto;
+        padding:12px;
+    }
+
+    .logo-title{
+        font-size:24px;
+    }
+
+    .chat-box{
+        min-height:350px;
+    }
+
+    .input-area{
+        gap:8px;
+    }
+
+    button{
+        width:75px;
+    }
+
+    .user span,
+    .ai span{
+        max-width:85%;
+    }
 
 }
 
@@ -228,66 +188,67 @@ color:#999;
 <div class="container">
 
 
-<div class="logo-title">
-
-摆渡心理 AI心理助手
-
-</div>
+    <div class="logo-title">
+        摆渡心理 AI心理助手
+    </div>
 
 
-<div class="subtitle">
-
-温暖陪伴 · 专业支持 · 安全交流
-
-</div>
+    <div class="subtitle">
+        温暖陪伴 · 专业支持 · 安全交流
+    </div>
 
 
+    <div id="chat" class="chat-box">
 
-<div id="chat" class="chat-box">
+        <div class="ai">
 
-
-<div class="ai">
-
-<span>
+            <span>
 您好，我是摆渡心理AI助手。
 <br>
 您可以告诉我最近的情绪、压力或困扰。
-</span>
+            </span>
 
-</div>
+        </div>
 
-
-</div>
-
+    </div>
 
 
-<div class="input-area">
+    <div class="input-area">
+
+        <textarea
+            id="msg"
+            placeholder="请输入您的问题，例如：最近压力很大怎么办？"
+            maxlength="2000">
+        </textarea>
+
+        <button
+            id="sendBtn"
+            type="button"
+            onclick="send()">
+            发送
+        </button>
+
+    </div>
 
 
-<textarea
-id="msg"
-placeholder="请输入您的问题，例如：最近压力很大怎么办？">
-</textarea>
+    <div class="hotline">
+
+        心理危机干预热线：
+
+        <a href="tel:4000071995">
+            400 007 1995
+        </a>
+
+    </div>
 
 
-<button onclick="send()">
-发送
-</button>
+    <div class="notice">
 
+        AI助手提供一般性心理支持，不能替代专业医疗诊断或治疗。
+        <br>
+        如遇紧急心理危机，请及时寻求专业帮助。
 
-</div>
-
-
-
-<div class="hotline">
-
-心理危机干预热线：
-
-<a href="tel:4000071995">
-400 007 1995
-</a>
-
-</div>
+    </div>
 
 
 </div>
@@ -296,207 +257,380 @@ placeholder="请输入您的问题，例如：最近压力很大怎么办？">
 
 <script>
 
+/*
+ * ==========================================
+ * 摆渡心理 AI助手
+ * ==========================================
+ *
+ * 本页面不会保存或暴露：
+ *
+ * DEEPSEEK_API_KEY
+ * RESEND_API_KEY
+ *
+ * 两个密钥均由 Cloudflare Functions 后端处理。
+ */
+
+
+/*
+ * 保存本次页面打开期间的聊天记录
+ *
+ * 格式：
+ *
+ * [
+ *   {
+ *     role:"user",
+ *     content:"用户说的话"
+ *   },
+ *   {
+ *     role:"assistant",
+ *     content:"AI回复"
+ *   }
+ * ]
+ */
+
+const chatHistory = [];
+
+
+/*
+ * ==========================================
+ * 发送消息
+ * ==========================================
+ */
 
 async function send(){
 
+    const input =
+        document.getElementById("msg");
 
-const input =
-document.getElementById("msg");
+    const sendBtn =
+        document.getElementById("sendBtn");
+
+    const chat =
+        document.getElementById("chat");
 
 
-const text =
-input.value.trim();
+    /*
+     * 获取用户输入
+     */
+
+    const text =
+        input.value.trim();
 
 
+    /*
+     * 没有内容就不发送
+     */
 
-if(!text){
+    if(!text){
+        return;
+    }
 
-return;
+
+    /*
+     * 防止重复点击
+     */
+
+    sendBtn.disabled = true;
+
+
+    /*
+     * ==========================================
+     * 显示用户消息
+     * ==========================================
+     */
+
+    const userDiv =
+        document.createElement("div");
+
+    userDiv.className = "user";
+
+
+    const userSpan =
+        document.createElement("span");
+
+
+    /*
+     * 使用 textContent
+     *
+     * 不使用 innerHTML
+     *
+     * 防止用户输入 HTML / JavaScript
+     */
+
+    userSpan.textContent = text;
+
+
+    userDiv.appendChild(userSpan);
+
+    chat.appendChild(userDiv);
+
+
+    /*
+     * 清空输入框
+     */
+
+    input.value = "";
+
+
+    /*
+     * ==========================================
+     * 显示 AI 正在思考
+     * ==========================================
+     */
+
+    const loading =
+        document.createElement("div");
+
+    loading.className = "ai loading";
+
+
+    const loadingSpan =
+        document.createElement("span");
+
+    loadingSpan.textContent =
+        "AI正在思考...";
+
+
+    loading.appendChild(loadingSpan);
+
+    chat.appendChild(loading);
+
+
+    /*
+     * 滚动到底部
+     */
+
+    chat.scrollTop =
+        chat.scrollHeight;
+
+
+    try{
+
+
+        /*
+         * ==========================================
+         * 调用 Cloudflare API
+         * ==========================================
+         */
+
+        const response =
+            await fetch("/api/ai",{
+
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+
+                    /*
+                     * 当前用户问题
+                     */
+
+                    message:text,
+
+
+                    /*
+                     * 之前的聊天记录
+                     */
+
+                    history:chatHistory
+
+                })
+
+            });
+
+
+        /*
+         * 尝试读取 JSON
+         */
+
+        const data =
+            await response.json();
+
+
+        /*
+         * 删除加载提示
+         */
+
+        loading.remove();
+
+
+        /*
+         * ==========================================
+         * 判断 API 是否成功
+         * ==========================================
+         */
+
+        if(
+            !response.ok ||
+            data.success === false
+        ){
+
+            throw new Error(
+                data.error ||
+                "AI服务暂时不可用"
+            );
+
+        }
+
+
+        /*
+         * ==========================================
+         * 获取 AI 回复
+         * ==========================================
+         */
+
+        const answer =
+            data.reply ||
+            "AI暂时无法回复，请稍后再试。";
+
+
+        /*
+         * ==========================================
+         * 保存聊天记录
+         * ==========================================
+         */
+
+        chatHistory.push({
+
+            role:"user",
+
+            content:text
+
+        });
+
+
+        chatHistory.push({
+
+            role:"assistant",
+
+            content:answer
+
+        });
+
+
+        /*
+         * ==========================================
+         * 显示 AI 回复
+         * ==========================================
+         */
+
+        const aiDiv =
+            document.createElement("div");
+
+        aiDiv.className = "ai";
+
+
+        const aiSpan =
+            document.createElement("span");
+
+
+        /*
+         * 使用 textContent
+         */
+
+        aiSpan.textContent =
+            answer;
+
+
+        aiDiv.appendChild(aiSpan);
+
+        chat.appendChild(aiDiv);
+
+
+    }
+    catch(error){
+
+
+        /*
+         * 删除加载提示
+         */
+
+        loading.remove();
+
+
+        /*
+         * 显示错误信息
+         */
+
+        const errorDiv =
+            document.createElement("div");
+
+        errorDiv.className = "ai";
+
+
+        const errorSpan =
+            document.createElement("span");
+
+        errorSpan.textContent =
+            "连接AI服务失败，请稍后再试。";
+
+
+        errorDiv.appendChild(errorSpan);
+
+        chat.appendChild(errorDiv);
+
+
+        /*
+         * 控制台记录错误
+         */
+
+        console.error(
+            "AI请求失败：",
+            error
+        );
+
+    }
+
+
+    /*
+     * 恢复发送按钮
+     */
+
+    sendBtn.disabled = false;
+
+
+    /*
+     * 滚动到底部
+     */
+
+    chat.scrollTop =
+        chat.scrollHeight;
 
 }
 
 
 
-const chat =
-document.getElementById("chat");
-
-
-
-// 用户消息
-
-chat.innerHTML += `
-
-<div class="user">
-
-<span>
-${text}
-</span>
-
-</div>
-
-`;
-
-
-
-input.value="";
-
-
-
-// 加载
-
-const loading=document.createElement("div");
-
-loading.className="ai loading";
-
-loading.innerHTML=
-
-"<span>AI正在思考...</span>";
-
-chat.appendChild(loading);
-
-
-
-chat.scrollTop=chat.scrollHeight;
-
-
-
-try{
-
-
-const r=await fetch("/api/ai",{
-
-
-method:"POST",
-
-
-headers:{
-
-
-"Content-Type":
-
-"application/json"
-
-
-},
-
-
-body:JSON.stringify({
-
-message:text
-
-})
-
-
-});
-
-
-
-const data =
-await r.json();
-
-
-
-loading.remove();
-
-
-
-let answer="";
-
-
-if(data.choices){
-
-answer=
-data.choices[0]
-.message
-.content;
-
-}
-
-else if(data.error){
-
-answer=data.error;
-
-}
-
-else{
-
-answer="AI暂时无法回复，请稍后再试";
-
-}
-
-
-
-chat.innerHTML += `
-
-
-<div class="ai">
-
-<span>
-
-${answer}
-
-</span>
-
-</div>
-
-
-`;
-
-
-
-}
-
-catch(e){
-
-
-loading.remove();
-
-
-chat.innerHTML += `
-
-
-<div class="ai">
-
-<span>
-
-连接AI服务失败，请稍后再试。
-
-</span>
-
-</div>
-
-
-`;
-
-}
-
-
-
-chat.scrollTop=
-chat.scrollHeight;
-
-
-}
-
-
-
-// 回车发送
+/*
+ * ==========================================
+ * Enter 发送
+ *
+ * Enter     = 发送
+ * Shift+Enter = 换行
+ * ==========================================
+ */
 
 document
-.getElementById("msg")
-.addEventListener(
-"keydown",
-function(e){
+    .getElementById("msg")
+    .addEventListener(
+        "keydown",
+        function(e){
 
-if(e.key==="Enter" && !e.shiftKey){
+            if(
+                e.key === "Enter" &&
+                !e.shiftKey
+            ){
 
-e.preventDefault();
+                e.preventDefault();
 
-send();
+                send();
 
-}
+            }
 
-});
+        }
+    );
 
 
 </script>
