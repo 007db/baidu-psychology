@@ -5,15 +5,16 @@
 
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1.0"
->
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>摆渡心理 AI助手</title>
 
-
 <style>
+
+* {
+  box-sizing: border-box;
+}
 
 body {
 
@@ -26,8 +27,9 @@ body {
 
   background: #f3f9ff;
 
-}
+  color: #333;
 
+}
 
 .container {
 
@@ -38,7 +40,6 @@ body {
   padding: 20px;
 
 }
-
 
 .logo-title {
 
@@ -52,17 +53,17 @@ body {
 
 }
 
-
 .subtitle {
 
   text-align: center;
 
-  color: #555;
+  color: #666;
+
+  margin-top: 8px;
 
   margin-bottom: 20px;
 
 }
-
 
 .chat-box {
 
@@ -81,23 +82,21 @@ body {
 
   overflow-y: auto;
 
-  box-sizing: border-box;
-
 }
-
 
 .user {
 
   text-align: right;
 
-  margin: 12px 0;
+  margin: 14px 0;
 
 }
-
 
 .user span {
 
   display: inline-block;
+
+  max-width: 85%;
 
   background: #0077c8;
 
@@ -105,31 +104,27 @@ body {
 
   padding: 10px 15px;
 
-  border-radius: 15px;
-
-  max-width: 80%;
-
-  text-align: left;
-
-  word-break: break-word;
+  border-radius: 15px 15px 3px 15px;
 
   white-space: pre-wrap;
 
-}
+  word-break: break-word;
 
+}
 
 .ai {
 
   text-align: left;
 
-  margin: 12px 0;
+  margin: 14px 0;
 
 }
-
 
 .ai span {
 
   display: inline-block;
+
+  max-width: 85%;
 
   background: #e8f5ff;
 
@@ -137,18 +132,19 @@ body {
 
   padding: 10px 15px;
 
-  border-radius: 15px;
-
-  max-width: 80%;
-
-  text-align: left;
-
-  word-break: break-word;
+  border-radius: 15px 15px 15px 3px;
 
   white-space: pre-wrap;
 
+  word-break: break-word;
+
 }
 
+.loading {
+
+  color: #999;
+
+}
 
 .input-area {
 
@@ -159,7 +155,6 @@ body {
   gap: 10px;
 
 }
-
 
 textarea {
 
@@ -177,15 +172,15 @@ textarea {
 
   resize: none;
 
-  box-sizing: border-box;
-
-  font-family:
-    "Microsoft YaHei",
-    Arial,
-    sans-serif;
+  outline: none;
 
 }
 
+textarea:focus {
+
+  border-color: #0077c8;
+
+}
 
 button {
 
@@ -205,40 +200,49 @@ button {
 
 }
 
-
 button:hover {
 
   background: #005fa3;
 
 }
 
-
 button:disabled {
 
-  background: #9bbfd5;
+  background: #aaa;
 
   cursor: not-allowed;
 
 }
 
+.end-area {
+
+  margin-top: 15px;
+
+  text-align: center;
+
+}
 
 .end-button {
 
   width: 100%;
 
-  margin-top: 15px;
+  max-width: 300px;
 
-  background: #5f7d8c;
+  height: 45px;
+
+  background: #555;
+
+  border-radius: 10px;
+
+  font-size: 15px;
 
 }
-
 
 .end-button:hover {
 
-  background: #4d6875;
+  background: #333;
 
 }
-
 
 .hotline {
 
@@ -250,7 +254,6 @@ button:disabled {
 
 }
 
-
 .hotline a {
 
   color: #e53935;
@@ -261,94 +264,15 @@ button:disabled {
 
 }
 
+.status {
 
-.notice {
+  margin-top: 12px;
 
-  margin-top: 15px;
-
-  padding: 12px 15px;
-
-  background: #f5f5f5;
-
-  border-radius: 10px;
+  text-align: center;
 
   color: #777;
 
-  font-size: 13px;
-
-  line-height: 1.6;
-
-  text-align: center;
-
-}
-
-
-.status {
-
-  text-align: center;
-
-  margin-top: 10px;
-
   font-size: 14px;
-
-  color: #0077c8;
-
-}
-
-
-.error {
-
-  color: #d32f2f;
-
-}
-
-
-.success {
-
-  color: #2e7d32;
-
-}
-
-
-@media (max-width:600px) {
-
-  .container {
-
-    margin: 10px auto;
-
-    padding: 12px;
-
-  }
-
-
-  .logo-title {
-
-    font-size: 24px;
-
-  }
-
-
-  .chat-box {
-
-    min-height: 380px;
-
-    padding: 15px;
-
-  }
-
-
-  .input-area {
-
-    gap: 8px;
-
-  }
-
-
-  button {
-
-    width: 75px;
-
-  }
 
 }
 
@@ -377,10 +301,7 @@ button:disabled {
   </div>
 
 
-  <div
-    id="chat"
-    class="chat-box"
-  >
+  <div id="chat" class="chat-box">
 
     <div class="ai">
 
@@ -402,47 +323,37 @@ button:disabled {
       placeholder="请输入您的问题，例如：最近压力很大怎么办？"
     ></textarea>
 
-
     <button
       id="sendButton"
       onclick="send()"
     >
-
       发送
-
     </button>
 
   </div>
 
 
-  <button
-    id="endButton"
-    class="end-button"
-    onclick="endConversation()"
-  >
+  <!-- =========================
+       结束对话按钮
+       ========================= -->
 
-    结束对话并发送记录
+  <div class="end-area">
 
-  </button>
+    <button
+      id="endButton"
+      class="end-button"
+      onclick="endConversation()"
+    >
+      结束对话并发送记录
+    </button>
+
+  </div>
 
 
   <div
     id="status"
     class="status"
   ></div>
-
-
-  <div class="notice">
-
-    AI助手提供的是一般性的心理支持，
-    不能替代专业心理咨询或医疗诊断。
-
-    <br>
-
-    点击“结束对话并发送记录”后，
-    本次聊天记录将发送到摆渡心理工作邮箱。
-
-  </div>
 
 
   <div class="hotline">
@@ -459,100 +370,71 @@ button:disabled {
 </div>
 
 
+
 <script>
 
 
-/* =====================================
+/* =====================================================
    聊天记录
-===================================== */
+   ===================================================== */
 
-const chatHistory = [];
+let history = [
+
+  {
+    role: "assistant",
+
+    content:
+      "您好，我是摆渡心理AI助手。\n您可以告诉我最近的情绪、压力或困扰。"
+
+  }
+
+];
 
 
-/* =====================================
+let conversationEnded = false;
+
+
+/* =====================================================
    HTML安全转义
-===================================== */
+   ===================================================== */
 
 function escapeHtml(text) {
 
-  const div =
-    document.createElement("div");
+  return String(text)
 
-  div.textContent =
-    text;
+    .replace(/&/g, "&amp;")
 
-  return div.innerHTML;
+    .replace(/</g, "&lt;")
 
-}
+    .replace(/>/g, "&gt;")
 
+    .replace(/"/g, "&quot;")
 
-/* =====================================
-   显示消息
-===================================== */
-
-function addMessage(
-  role,
-  text
-) {
-
-  const chat =
-    document.getElementById("chat");
-
-
-  const div =
-    document.createElement("div");
-
-
-  div.className =
-    role === "user"
-      ? "user"
-      : "ai";
-
-
-  const span =
-    document.createElement("span");
-
-
-  span.textContent =
-    text;
-
-
-  div.appendChild(span);
-
-  chat.appendChild(div);
-
-
-  chat.scrollTop =
-    chat.scrollHeight;
+    .replace(/'/g, "&#039;");
 
 }
 
 
-/* =====================================
-   发送AI消息
-===================================== */
+/* =====================================================
+   发送消息
+   ===================================================== */
 
 async function send() {
+
+
+  if (conversationEnded) {
+
+    return;
+
+  }
 
 
   const input =
     document.getElementById("msg");
 
 
-  const button =
+  const sendButton =
     document.getElementById("sendButton");
-
-
-  const endButton =
-    document.getElementById("endButton");
-
-
-  const chat =
-    document.getElementById("chat");
-
-
-  const status =
-    document.getElementById("status");
 
 
   const text =
@@ -566,23 +448,36 @@ async function send() {
   }
 
 
-  /* 用户消息 */
-
-  addMessage(
-    "user",
-    text
-  );
+  const chat =
+    document.getElementById("chat");
 
 
-  /* 保存用户消息 */
+  /* =========================
+     显示用户消息
+     ========================= */
 
-  chatHistory.push({
+  chat.innerHTML += `
 
-    role:
-      "user",
+    <div class="user">
 
-    content:
-      text
+      <span>
+        ${escapeHtml(text)}
+      </span>
+
+    </div>
+
+  `;
+
+
+  /* =========================
+     保存用户消息
+     ========================= */
+
+  history.push({
+
+    role: "user",
+
+    content: text
 
   });
 
@@ -590,40 +485,26 @@ async function send() {
   input.value = "";
 
 
-  button.disabled = true;
-
-  endButton.disabled = true;
+  sendButton.disabled = true;
 
 
-  status.textContent =
-    "AI正在思考...";
-
-
-  status.className =
-    "status";
-
-
-  /* 加载 */
+  /* =========================
+     AI加载提示
+     ========================= */
 
   const loading =
     document.createElement("div");
 
 
   loading.className =
-    "ai";
-
-
-  loading.id =
-    "loading";
+    "ai loading";
 
 
   loading.innerHTML =
     "<span>AI正在思考...</span>";
 
 
-  chat.appendChild(
-    loading
-  );
+  chat.appendChild(loading);
 
 
   chat.scrollTop =
@@ -638,8 +519,7 @@ async function send() {
         "/api/ai",
         {
 
-          method:
-            "POST",
+          method: "POST",
 
           headers: {
 
@@ -651,8 +531,7 @@ async function send() {
           body:
             JSON.stringify({
 
-              message:
-                text
+              message: text
 
             })
 
@@ -664,105 +543,129 @@ async function send() {
       await response.json();
 
 
-    const oldLoading =
-      document.getElementById(
-        "loading"
-      );
+    loading.remove();
 
 
-    if (oldLoading) {
-
-      oldLoading.remove();
-
-    }
-
+    /* =========================
+       判断API是否成功
+       ========================= */
 
     if (
       !response.ok ||
-      !data.success
+      data.success === false
     ) {
 
-      throw new Error(
+      const errorMessage =
         data.error ||
-        "AI服务暂时异常"
-      );
+        "AI服务暂时无法回复，请稍后再试。";
+
+
+      chat.innerHTML += `
+
+        <div class="ai">
+
+          <span>
+            ${escapeHtml(errorMessage)}
+          </span>
+
+        </div>
+
+      `;
+
+
+      sendButton.disabled = false;
+
+      return;
 
     }
 
 
     const answer =
-      data.reply ||
-      "AI暂时没有回复";
+      data.reply || "";
 
 
-    /* 显示AI */
+    if (!answer) {
 
-    addMessage(
-      "assistant",
-      answer
-    );
+      chat.innerHTML += `
 
+        <div class="ai">
 
-    /* 保存AI回复 */
+          <span>
+            AI暂时没有返回内容，请稍后再试。
+          </span>
 
-    chatHistory.push({
+        </div>
 
-      role:
-        "assistant",
-
-      content:
-        answer
-
-    });
+      `;
 
 
-    status.textContent =
-      "";
+      sendButton.disabled = false;
 
-
-  }
-  catch (error) {
-
-
-    const oldLoading =
-      document.getElementById(
-        "loading"
-      );
-
-
-    if (oldLoading) {
-
-      oldLoading.remove();
+      return;
 
     }
 
 
-    addMessage(
-      "assistant",
-      "⚠️ " +
-      (
-        error?.message ||
-        "AI服务暂时异常"
-      )
+    /* =========================
+       保存AI回复
+       ========================= */
+
+    history.push({
+
+      role: "assistant",
+
+      content: answer
+
+    });
+
+
+    /* =========================
+       显示AI回复
+       ========================= */
+
+    chat.innerHTML += `
+
+      <div class="ai">
+
+        <span>
+          ${escapeHtml(answer)}
+        </span>
+
+      </div>
+
+    `;
+
+
+  }
+
+  catch (error) {
+
+
+    console.error(
+      "AI请求失败:",
+      error
     );
 
 
-    status.textContent =
-      "AI服务出现异常，请稍后再试。";
+    loading.remove();
 
 
-    status.className =
-      "status error";
+    chat.innerHTML += `
+
+      <div class="ai">
+
+        <span>
+          连接AI服务失败，请稍后再试。
+        </span>
+
+      </div>
+
+    `;
 
   }
 
 
-  button.disabled =
-    false;
-
-
-  endButton.disabled =
-    false;
+  sendButton.disabled = false;
 
 
   chat.scrollTop =
@@ -771,39 +674,24 @@ async function send() {
 }
 
 
-/* =====================================
-   结束对话
-===================================== */
+/* =====================================================
+   结束对话并发送聊天记录
+   ===================================================== */
 
 async function endConversation() {
 
 
-  const endButton =
-    document.getElementById(
-      "endButton"
-    );
+  if (conversationEnded) {
+
+    return;
+
+  }
 
 
-  const sendButton =
-    document.getElementById(
-      "sendButton"
-    );
-
-
-  const status =
-    document.getElementById(
-      "status"
-    );
-
-
-  /* 没有聊天记录 */
-
-  if (
-    chatHistory.length === 0
-  ) {
+  if (history.length <= 1) {
 
     alert(
-      "当前还没有聊天记录。"
+      "当前还没有有效的聊天记录。"
     );
 
     return;
@@ -811,12 +699,9 @@ async function endConversation() {
   }
 
 
-  /* 用户确认 */
-
   const confirmed =
     confirm(
-      "确定结束本次AI对话吗？\n\n" +
-      "点击“确定”后，本次完整聊天记录将发送到摆渡心理工作邮箱。"
+      "确定结束本次对话并将完整聊天记录发送到工作邮箱吗？"
     );
 
 
@@ -827,32 +712,55 @@ async function endConversation() {
   }
 
 
-  endButton.disabled =
-    true;
+  const endButton =
+    document.getElementById("endButton");
 
 
-  sendButton.disabled =
-    true;
+  const sendButton =
+    document.getElementById("sendButton");
 
 
-  status.textContent =
+  const input =
+    document.getElementById("msg");
+
+
+  const status =
+    document.getElementById("status");
+
+
+  /* =========================
+     防止重复发送
+     ========================= */
+
+  endButton.disabled = true;
+
+  sendButton.disabled = true;
+
+  input.disabled = true;
+
+
+  endButton.innerText =
     "正在发送聊天记录...";
 
 
-  status.className =
-    "status";
+  status.innerText =
+    "正在将完整聊天记录发送到工作邮箱，请稍候";
 
 
   try {
 
+
+    /* =========================
+       调用 /api/ai
+       endConversation = true
+       ========================= */
 
     const response =
       await fetch(
         "/api/ai",
         {
 
-          method:
-            "POST",
+          method: "POST",
 
           headers: {
 
@@ -868,7 +776,7 @@ async function endConversation() {
                 true,
 
               history:
-                chatHistory
+                history
 
             })
 
@@ -880,49 +788,71 @@ async function endConversation() {
       await response.json();
 
 
+    console.log(
+      "结束对话返回:",
+      data
+    );
+
+
+    /* =========================
+       邮件发送成功
+       ========================= */
+
     if (
-      !response.ok ||
-      !data.success
+      response.ok &&
+      data.success === true
     ) {
 
-      throw new Error(
-        data.error ||
-        "聊天记录发送失败"
+
+      conversationEnded = true;
+
+
+      endButton.innerText =
+        "聊天记录已发送";
+
+
+      status.innerText =
+        "本次聊天记录已发送到工作邮箱";
+
+
+      alert(
+        "本次聊天记录已成功发送到工作邮箱！"
+      );
+
+
+    }
+
+    else {
+
+
+      endButton.disabled = false;
+
+      sendButton.disabled = false;
+
+      input.disabled = false;
+
+
+      endButton.innerText =
+        "结束对话并发送记录";
+
+
+      status.innerText =
+        "";
+
+
+      alert(
+        "聊天记录发送失败：\n" +
+        (
+          data.error ||
+          "未知错误"
+        )
       );
 
     }
 
 
-    /* =================================
-       发送成功
-    ================================= */
-
-    status.textContent =
-      "✅ 聊天记录已成功发送到工作邮箱";
-
-
-    status.className =
-      "status success";
-
-
-    alert(
-      "聊天记录已成功发送到摆渡心理工作邮箱。"
-    );
-
-
-    /*
-     * 结束后不允许继续发送
-     */
-
-    sendButton.disabled =
-      true;
-
-
-    endButton.disabled =
-      true;
-
-
   }
+
   catch (error) {
 
 
@@ -932,32 +862,23 @@ async function endConversation() {
     );
 
 
-    status.textContent =
-      "❌ " +
-      (
-        error?.message ||
-        "聊天记录发送失败"
-      );
+    endButton.disabled = false;
+
+    sendButton.disabled = false;
+
+    input.disabled = false;
 
 
-    status.className =
-      "status error";
+    endButton.innerText =
+      "结束对话并发送记录";
 
 
-    endButton.disabled =
-      false;
-
-
-    sendButton.disabled =
-      false;
+    status.innerText =
+      "";
 
 
     alert(
-      "聊天记录发送失败：\n" +
-      (
-        error?.message ||
-        "未知错误"
-      )
+      "聊天记录发送失败，请稍后再试。"
     );
 
   }
@@ -965,10 +886,10 @@ async function endConversation() {
 }
 
 
-/* =====================================
+/* =====================================================
    Enter发送
    Shift + Enter换行
-===================================== */
+   ===================================================== */
 
 document
   .getElementById("msg")
