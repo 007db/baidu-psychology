@@ -1,93 +1,30 @@
+
 <!doctype html>
-<html lang="zh-CN">
+<html lang='zh-CN'>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset='UTF-8'>
 <title>摆渡心理 AI助手</title>
-<style>
-body{margin:0;font-family:Microsoft YaHei;background:#f3f9ff}
-.container{max-width:700px;margin:30px auto;padding:20px}
-.logo-title{text-align:center;color:#0077c8;font-size:28px;font-weight:bold}
-.chat-box{background:white;border-radius:15px;padding:20px;min-height:350px}
-.user{text-align:right;margin:12px}
-.user span{background:#0077c8;color:white;padding:10px;border-radius:15px}
-.ai{margin:12px}
-.ai span{background:#e8f5ff;padding:10px;border-radius:15px;display:inline-block;white-space:pre-wrap}
-.input-area{display:flex;gap:10px;margin-top:15px}
-textarea{flex:1;height:70px}
-button{background:#0077c8;color:white;border:0;border-radius:10px;width:90px}
-.status{text-align:center;color:#666;margin-top:15px}
-</style>
 </head>
 <body>
-<div class="container">
-<div class="logo-title">摆渡心理 AI心理助手</div>
-<div id="chat" class="chat-box">
-<div class="ai"><span>您好，我是摆渡心理AI助手。</span></div>
-</div>
-<div class="input-area">
-<textarea id="msg" placeholder="请输入您的问题"></textarea>
-<button onclick="send()">发送</button>
-</div>
-<div id="status" class="status"></div>
-</div>
-
+<h2>摆渡心理 AI心理助手 V10.1</h2>
+<textarea id='msg'></textarea>
+<button onclick='send()'>发送</button>
+<div id='chat'></div>
 <script>
-let history=[{role:"assistant",content:"您好，我是摆渡心理AI助手。"}];
-let timer=null;
-let sent=false;
-
-function esc(t){
-return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-}
-
-function resetTimer(){
-if(timer) clearTimeout(timer);
-timer=setTimeout(autoSend,600000);
-}
-
-async function autoSend(){
-if(sent||history.length<=1)return;
-try{
-let r=await fetch("/api/ai",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({endConversation:true,history})
-});
-let d=await r.json();
-if(d.success){
-sent=true;
-document.getElementById("status").innerText="聊天记录已自动发送到工作邮箱";
-}
-}catch(e){console.error(e);}
-}
+let sessionId=localStorage.sessionId||crypto.randomUUID();
+localStorage.sessionId=sessionId;
 
 async function send(){
-let input=document.getElementById("msg");
-let text=input.value.trim();
-if(!text)return;
-
-let chat=document.getElementById("chat");
-chat.innerHTML+=`<div class="user"><span>${esc(text)}</span></div>`;
-history.push({role:"user",content:text});
-input.value="";
-
-try{
-let r=await fetch("/api/ai",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({message:text})
-});
-let d=await r.json();
-let ans=d.reply||d.error||"AI暂时无法回复";
-
-history.push({role:"assistant",content:ans});
-chat.innerHTML+=`<div class="ai"><span>${esc(ans)}</span></div>`;
-resetTimer();
-
-}catch(e){
-chat.innerHTML+="<div class='ai'><span>连接失败</span></div>";
-}
+ let message=document.getElementById('msg').value;
+ if(!message)return;
+ let r=await fetch('/api/ai',{
+ method:'POST',
+ headers:{'Content-Type':'application/json'},
+ body:JSON.stringify({message,sessionId})
+ });
+ let d=await r.json();
+ document.getElementById('chat').innerHTML+=
+ '<p>用户：'+message+'</p><p>AI：'+(d.reply||d.error)+'</p>';
 }
 </script>
 </body>
