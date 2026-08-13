@@ -1,10 +1,28 @@
-export async function scheduled(event, env, ctx) {
+export default {
 
 
-console.log("Cron开始执行");
+async scheduled(event, env, ctx){
 
 
-// 查询10分钟前未发送记录
+console.log(
+"===== Cron开始执行 ====="
+);
+
+
+
+if(!env.RESEND_API_KEY){
+
+console.error(
+"没有配置 RESEND_API_KEY"
+);
+
+return;
+
+}
+
+
+
+// 查询10分钟前未发送
 
 const sessions =
 await env.DB.prepare(
@@ -12,7 +30,7 @@ await env.DB.prepare(
 SELECT *
 FROM chat_sessions
 WHERE email_sent=0
-AND last_time <= datetime('now','-10 minutes')
+AND last_time <= datetime('now','+8 hours','-10 minutes')
 `
 )
 .all();
@@ -20,13 +38,16 @@ AND last_time <= datetime('now','-10 minutes')
 
 
 console.log(
-"待发送:",
+"发现待发送:",
 sessions.results.length
 );
 
 
 
 for(const session of sessions.results){
+
+
+try{
 
 
 const chats =
@@ -38,12 +59,31 @@ WHERE session_id=?
 ORDER BY id ASC
 `
 )
-.bind(session.session_id)
+.bind(
+session.session_id
+)
 .all();
 
 
 
-let content="";
+if(
+!chats.results.length
+){
+
+console.log(
+"无聊天内容:",
+session.session_id
+);
+
+continue;
+
+}
+
+
+
+let content =
+"摆渡心理 AI聊天记录\n\n";
+
 
 
 for(const item of chats.results){
@@ -51,8 +91,9 @@ for(const item of chats.results){
 
 content +=
 
-`
-${item.role==="user"?"用户":"摆渡心理AI助手"}：
+`${item.role==="user"
+?"用户"
+:"摆渡心理AI助手"}：
 
 ${item.content}
 
@@ -62,7 +103,12 @@ ${item.content}
 
 
 
-//发送邮件
+console.log(
+"准备发送:",
+session.session_id
+);
+
+
 
 const mail =
 await fetch(
@@ -75,12 +121,11 @@ method:"POST",
 
 headers:{
 
-"Authorization":
-
-"Bearer "+env.RESEND_API_KEY,
+Authorization:
+"Bearer "+
+env.RESEND_API_KEY,
 
 "Content-Type":
-
 "application/json"
 
 },
@@ -105,7 +150,8 @@ subject:
 "【摆渡心理】AI心理助手聊天记录",
 
 
-text:content
+text:
+content
 
 
 })
@@ -117,14 +163,21 @@ text:content
 
 
 
+const result =
+await mail.text();
+
+
+
 console.log(
-"邮件结果:",
-await mail.text()
+"Resend:",
+mail.status,
+result
 );
 
 
 
-//标记已发送
+if(mail.ok){
+
 
 await env.DB.prepare(
 `
@@ -133,13 +186,57 @@ SET email_sent=1
 WHERE id=?
 `
 )
-.bind(session.id)
+.bind(
+session.id
+)
 .run();
 
 
+console.log(
+"发送成功:",
+session.session_id
+);
+
+
+}
+
+else{
+
+
+console.error(
+"发送失败，保留重试"
+);
+
 
 }
 
 
 
 }
+catch(e){
+
+
+console.error(
+"处理失败:",
+e
+);
+
+
+}
+
+
+
+}
+
+
+
+console.log(
+"===== Cron结束 ====="
+);
+
+
+
+}
+
+
+};
